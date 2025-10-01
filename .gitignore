@@ -1,0 +1,15 @@
+/uploads/*
+*.log
+.DS_Store
+.env
+vendor/
+node_modules/
+.idea/
+*.sqlite
+*.sqlite3
+/.vscode/*
+/coverage/
+
+ public/assets/* 
+
+# Ignore compiled files

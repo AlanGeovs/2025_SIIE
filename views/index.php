@@ -42,63 +42,21 @@
     <meta name="msapplication-TileImage" content="../public/assets/img/logo-inifed-sia.png">
     <meta name="theme-color" content="#ffffff">
     <meta name="description" content="Sistema de Infraestructura Educativa (SIIE) - Ficha de Diagnóstico .....">
-    <meta name="keywords" content="SIA, Alerta de Daños, INIFED, Ficha de Diagnóstico, Centros de Trabajo, Planteles Educativos, CCT">
+    <meta name="keywords" content="SIIE, Infraestructura Educativa, INIFED, Ficha de Diagnóstico, Centros de Trabajo, Planteles Educativos, CCT">
     <meta name="author" content="INIFED">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Sistema de Alerta de Daños - INIFED">
+    <meta property="og:title" content="Sistema de Infraestructura Educativa - INIFED">
     <meta property="og:description" content="Sistema de Infraestructura Educativa (SIIE) - Ficha de Diagnóstico ..... ">
-    <meta property="og:image" content="https://sia.inifed.mx/public/assets/img/logo-inifed-sia.png" />
+    <meta property="og:image" content="https://siie2.inifed.mx/public/assets/img/portadaSIIE.png" />
 
     <meta property="og:image:width" content="750">
     <meta property="og:image:height" content="375">
-    <meta property="og:url" content="https://sia.inifed.mx">
+    <meta property="og:url" content="https://siie2.inifed.mx">
 
     <style>
-        @media (max-width: 767.98px) {
-            .carousel-item .card {
-                flex: 0 0 100%;
-                max-width: 100%;
-            }
-        }
 
-        .card:hover {
-            background-color: #f8f9fa;
-        }
-
-        .card:hover .card-title a {
-            color: #691c32;
-        }
-
-        .btn-sia-destacado {
-            background-color: #d96220 !important;
-            color: white !important;
-            font-size: 1.4rem;
-            font-weight: bold;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            animation: pulseBoton 1.5s infinite;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        @keyframes pulseBoton {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(217, 98, 32, 0.7);
-            }
-
-            70% {
-                transform: scale(1.05);
-                box-shadow: 0 0 0 10px rgba(217, 98, 32, 0);
-            }
-
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(217, 98, 32, 0);
-            }
-        }
     </style>
 </head>
 
@@ -140,6 +98,13 @@
             </div>
         </div>
     </header>
+
+
+    <!-- Floating Sistema de Alerta de Daños Button -->
+    <a href="https://sia.inifed.mx" target="_blank" class="btn-alerta-danos">
+        <i class="fas fa-exclamation-triangle me-2"></i>Sistema de Alerta de Daños
+    </a>
+   
 
 
     <!-- Sección principal -->
@@ -323,7 +288,7 @@
                     <div class="support-card h-100">
                         <div class="  justify-content-center gap-2 mb-3">
                             <i class="fas fa-phone-alt fa-2x" style="color: #691c32;"></i>
-                            <h3 class="mb-0" style="font-size: 1.3em; color: #691c32;">Llámanos</h3>
+                            <h3 class="mb-0" style="font-size: 1.3em; color: #691c32;">Centro de Atención Telefónica</h3>
                         </div>
                         <div class="row g-3">
                             <div class="col-12 col-md-4">

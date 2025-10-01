@@ -26,21 +26,75 @@ $titulosModulos = [
 
 $modulo = isset($_POST['modulo']) ? intval($_POST['modulo']) : 1;
 if ($modulo < 1 || $modulo > 6) $modulo = 1;
+
+$idFichaSesion = isset($_SESSION['id_ficha']) ? intval($_SESSION['id_ficha']) : 0;
+
+// Estatus de captura por módulo (m1..m6). Si no hay ficha, por defecto 0.
+$estatusModulos = ['m1' => 0, 'm2' => 0, 'm3' => 0, 'm4' => 0, 'm5' => 0, 'm6' => 0];
+
+if ($idFichaSesion > 0) {
+    try {
+        $stmt = $pdo->prepare("SELECT m1, m2, m3, m4, m5, m6 FROM fichas WHERE id_ficha = :idficha LIMIT 1");
+        $stmt->execute([':idficha' => $idFichaSesion]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row) {
+            $estatusModulos = array_merge($estatusModulos, $row);
+        }
+    } catch (Exception $e) {
+        // Si hay error de DB, mantener estatus en 0 por defecto
+    }
+}
 ?>
 
 
 <style>
-    .container {
-        max-width: 1200px;
-        padding-left: .25rem;
-        padding-right: .25rem;
-        margin: 0 auto;
+    .modulo-wrapper {
+        position: relative;
+        display: inline-block;
     }
+
+    .completed-badge {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        transform: translate(50%, 50%);
+        z-index: 10;
+        font-size: 1rem;
+        color: white;
+        background-color: #198754;
+        /* Bootstrap success color */
+        border-radius: 50%;
+        width: 1.5em;
+        height: 1.5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* .modulo-circle {
+        background-color: #fff !important;
+        color: #000 !important;
+        border: 2px solid #ccc !important;
+        border-radius: 50%;
+        width: 3rem;
+        height: 3rem;
+        font-weight: bold;
+        font-size: 1.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .modulo-circle.active {
+        background-color: #dc3545 !important;
+        color: #fff !important;
+        border-color: #dc3545 !important;  
+    }*/
 </style>
 
-<div class="container my-2">
-
-
+<div class="containerDashboard my-2">
 
     <!-- Datos de usuario en session  -->
     <!-- <div>
@@ -56,20 +110,37 @@ if ($modulo < 1 || $modulo > 6) $modulo = 1;
             $activeClass = $isActive ? 'active' : 'bg-light text-dark';
             $roman = $romanNumerals[$i];
             $titulo = isset($titulosModulos[$i]) ? $titulosModulos[$i] : '';
+            $flagKey = 'm' . $i;
+            $estaCapturado = isset($estatusModulos[$flagKey]) ? intval($estatusModulos[$flagKey]) === 1 : false;
         ?>
             <form method="post" class="d-inline">
                 <input type="hidden" name="modulo" value="<?= $i ?>">
-                <button type="submit"
-                    class="modulo-circle border-0 p-0 <?= $activeClass ?>"
-                    data-bs-toggle="tooltip"
-                    title="<?= htmlspecialchars($titulo) ?>">
-                    <?= $roman ?>
-                </button>
+                <div class="modulo-wrapper">
+                    <button type="submit"
+                        class="modulo-circle border-0 p-0 <?= $activeClass ?>"
+                        data-bs-toggle="tooltip"
+                        title="<?= htmlspecialchars($titulo) ?>">
+                        <?= $roman ?>
+                    </button>
+                    <?php if ($estaCapturado): ?>
+                        <span class="completed-badge position-absolute bottom-0 end-0 translate-middle badge rounded-pill bg-success" title="Módulo capturado">✓</span>
+                    <?php endif; ?>
+                </div>
             </form>
         <?php endfor; ?>
     </div>
 
     <div class="card p-3">
+        <?php
+        $flagKeyActual = 'm' . $modulo;
+        $capturadoActual = isset($estatusModulos[$flagKeyActual]) ? intval($estatusModulos[$flagKeyActual]) === 1 : false;
+
+        if ($capturadoActual) {
+            echo '<div class="alert alert-success py-2 mb-3"><i class="fas fa-check-circle me-1"></i>Este módulo ya fue capturado.</div>';
+        } else {
+            echo '<div class="alert alert-warning py-2 mb-3"><i class="fas fa-clock me-1"></i>Este módulo aún no está capturado.</div>';
+        }
+        ?>
         <?php require_once __DIR__ . '/../templates/modulo_' . $modulo . '.php'; ?>
     </div>
 

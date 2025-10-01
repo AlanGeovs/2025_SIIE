@@ -38,6 +38,13 @@ header {
   margin: 0 auto;
 }
 
+.containerDashboard {
+  max-width: 1200px;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  margin: 0 auto;
+}
+
 .hero {
   background: linear-gradient(
       to right,
@@ -67,6 +74,171 @@ header {
 }
 
 /* Dashboard  */
+
+.modulo-circle {
+  background-color: #fff !important;
+  color: #691c32 !important;
+  border: 2px solid #ccc !important;
+  border-radius: 50%;
+  /* width: 3rem;
+        height: 3rem; */
+  /* font-weight: bold; */
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0.1s;
+
+  width: 50px;
+  height: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 50%;
+
+  /* background-color: #fff;  
+  color: #000;  
+  border: 2px solid #ccc;   */
+}
+
+.modulo-circle.active {
+  background-color: #691c32 !important;
+  color: #fff !important;
+  border: 2px solid #691c32 !important;
+}
+
+.modulo-circle:hover {
+  background-color: #9b2247 !important;
+  color: #fff !important;
+}
+
+.completed-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #198754; /* Bootstrap success */
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.65rem;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+}
+.modulo-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Botón de alerta de daños */
+@media (max-width: 767.98px) {
+  .carousel-item .card {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+.card:hover {
+  background-color: #f8f9fa;
+}
+
+.card:hover .card-title a {
+  color: #691c32;
+}
+
+.btn-sia-destacado {
+  background-color: #d96220 !important;
+  color: white !important;
+  font-size: 1.4rem;
+  font-weight: bold;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  animation: pulseBoton 1.5s infinite;
+  text-decoration: none;
+  display: inline-block;
+}
+
+@keyframes pulseBoton {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(217, 98, 32, 0.7);
+  }
+
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(217, 98, 32, 0);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(217, 98, 32, 0);
+  }
+}
+
+.btn-alerta-danos {
+  background-color: #1e5b4f;
+  color: #fff !important;
+  padding: 0.85rem 1.5rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  z-index: 1050;
+  box-shadow: 0 4px 16px rgba(30, 91, 79, 0.12);
+  transition: transform 0.17s, box-shadow 0.17s;
+  animation: pulseBotonVerde 1.5s infinite;
+}
+.btn-alerta-danos:hover,
+.btn-alerta-danos:focus {
+  transform: scale(1.07);
+  box-shadow: 0 8px 32px rgba(30, 91, 79, 0.24);
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .btn-alerta-danos {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    left: auto;
+    /* Scale down ~25% from base: */
+    padding: 0.64rem 1.13rem;
+    font-size: 0.83rem;
+  }
+}
+@media (max-width: 767.98px) {
+  .btn-alerta-danos {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    /* Scale down ~30% from base: */
+    padding: 0.6rem 1.05rem;
+    font-size: 0.77rem;
+  }
+}
+
+@keyframes pulseBotonVerde {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(30, 91, 79, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 14px rgba(30, 91, 79, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(30, 91, 79, 0);
+  }
+}
+
+/* Fin de botón de alerta de daños */
+
+/* 
 .modulo-circle {
   width: 50px;
   height: 50px;
@@ -87,7 +259,7 @@ header {
 .modulo-circle:hover {
   background-color: #9b2247 !important;
   color: #fff !important;
-}
+} */
 
 .btn-sia {
   background-color: #fff;

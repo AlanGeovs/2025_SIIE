@@ -53,6 +53,9 @@ switch ($path) {
     case 'acceso':
         cargarVista('acceso');
         break;
+    case 'inicio':
+        cargarVista('dashboard');
+        break;
     case 'detalle':
         cargarVista('detalle_reportes');
         break;
