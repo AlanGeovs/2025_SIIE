@@ -107,8 +107,53 @@ if (session_status() === PHP_SESSION_NONE) {
             <!-- Tercer tercio: Usuario y botón de salir -->
             <div class="d-flex align-items-center justify-content-end" style="flex: 1;">
                 <!-- poner los datos del CCT, nombre, Turno, nivel -->
-                <?php if (!isset($_SESSION['tipo_usuario']) || !in_array($_SESSION['tipo_usuario'], ['aseguradora', 'admin'], true)): ?>
-                    <span class="me-3 fw-semibold text-dark">CCT: <?= $_SESSION['cct'] ?? 'CCT' ?></span>
+                <?php
+                if (!isset($_SESSION['tipo_usuario']) || !in_array($_SESSION['tipo_usuario'], ['aseguradora', 'admin'], true)):
+                    // Array de entidades federativas
+                    $entidades = [
+                        "01" => "Aguascalientes",
+                        "02" => "Baja California",
+                        "03" => "Baja California Sur",
+                        "04" => "Campeche",
+                        "05" => "Coahuila",
+                        "06" => "Colima",
+                        "07" => "Chiapas",
+                        "08" => "Chihuahua",
+                        "09" => "Ciudad de México",
+                        "10" => "Durango",
+                        "11" => "Guanajuato",
+                        "12" => "Guerrero",
+                        "13" => "Hidalgo",
+                        "14" => "Jalisco",
+                        "15" => "México",
+                        "16" => "Michoacán",
+                        "17" => "Morelos",
+                        "18" => "Nayarit",
+                        "19" => "Nuevo León",
+                        "20" => "Oaxaca",
+                        "21" => "Puebla",
+                        "22" => "Querétaro",
+                        "23" => "Quintana Roo",
+                        "24" => "San Luis Potosí",
+                        "25" => "Sinaloa",
+                        "26" => "Sonora",
+                        "27" => "Tabasco",
+                        "28" => "Tamaulipas",
+                        "29" => "Tlaxcala",
+                        "30" => "Veracruz",
+                        "31" => "Yucatán",
+                        "32" => "Zacatecas"
+                    ];
+                    $cct = $_SESSION['cct'] ?? '';
+                    $entidadCodigo = substr($cct, 0, 2);
+                    $entidadNombre = $entidades[$entidadCodigo] ?? '';
+                ?>
+                    <div class="me-3 text-dark">
+                        <div class="fw-semibold">CCT: <?= $cct ?: 'CCT' ?></div>
+                        <?php if ($entidadNombre): ?>
+                            <div class="text-muted small">Entidad: <?= htmlspecialchars($entidadNombre) ?></div>
+                        <?php endif; ?>
+                    </div>
                 <?php endif; ?>
                 <a href="/logout" class="btn btn-sm text-white" style="background-color: var(--color-principal);">Salir</a>
             </div>

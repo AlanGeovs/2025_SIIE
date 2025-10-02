@@ -48,10 +48,11 @@ header {
 .hero {
   background: linear-gradient(
       to right,
-      rgba(97, 18, 50, 0.7),
+      rgba(97, 18, 50, 0.9),
       rgba(97, 18, 50, 0.1)
     ),
     url("../img/fondoSIIE.jpg") center center/cover no-repeat;
+  /* url("../img/portadaSIIE-v2.jpg") center center/cover no-repeat; */
   color: white;
   padding: 8rem 2rem;
   text-align: left;

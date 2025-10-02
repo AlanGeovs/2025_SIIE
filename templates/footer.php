@@ -1,6 +1,6 @@
 </main>
 
-<footer class="mt-auto">
+<footer class="mt-auto p-2">
     <div class="d-none d-md-block">
         <div style="position: relative; height: 180px; background-image: radial-gradient(at top center, #F2F6FEB3 0%, #FFFFFF 50%), url('../public/assets/img/bg_pattern_2.png'); background-repeat: repeat; background-size: 30px 30px;">
             <div class="elementor-background-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255,255,255,0.75);"></div>

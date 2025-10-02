@@ -104,7 +104,7 @@
     <a href="https://sia.inifed.mx" target="_blank" class="btn-alerta-danos">
         <i class="fas fa-exclamation-triangle me-2"></i>Sistema de Alerta de Daños
     </a>
-   
+
 
 
     <!-- Sección principal -->
@@ -356,7 +356,7 @@
         <img src="../public/assets/img/gobmujer.png" alt="Gobierno Mujer" style="max-height: 80px; margin: 1em 10px;">
     </div>
 
-    <footer class="text-center py-3 mt-5" style="background-color:#691c32; color:white; font-size: 0.9rem;">
+    <footer class="text-center py-3  p-2" style="background-color:#691c32; color:white; font-size: 0.9rem;">
         Sistema de Infraestructura Educativa (SIIE) - v1.0 - INIFED &copy; <?= date('Y') ?> | Desarrollado por la Gerencia del Sistema Nacional de Información
     </footer>
 </body>

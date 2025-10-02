@@ -93,6 +93,20 @@ require_once __DIR__ . '/../config/db.php';
             </div>
 
             <div id="seccionDatosComplementarios" style="display: none;">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="cct-input" class="form-label">1. Clave del Centro de Trabajo (CCT): <span class="text-danger">*</span></label>
+                        <input type="text" maxlength="10" class="form-control form-control-sm" id="cct-input" name="cct"
+                            placeholder="Ejemplo: 15EJN4255J" required>
+                        <div class="invalid-feedback">Ingrese la CCT.</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="cct-confirm" class="form-label">Confirma la CCT <span class="text-danger">*</span></label>
+                        <input type="text" maxlength="10" class="form-control form-control-sm" id="cct-confirm"
+                            placeholder="Vuelve a escribir la CCT" required>
+                        <div class="invalid-feedback">Confirma la CCT.</div>
+                    </div>
+                </div>
                 <h5 class="mt-4 mb-3">Nombre de la o el director del centro de trabajo</h5>
                 <div class="row g-3">
                     <div class="col-md-4">
@@ -160,9 +174,29 @@ require_once __DIR__ . '/../config/db.php';
         document.getElementById('registroForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
+            const cctVal = document.getElementById('cct-input').value.trim().toUpperCase();
+            const cctConfirmVal = document.getElementById('cct-confirm').value.trim().toUpperCase();
+            const cctRegex = /^[0-9]{2}[A-Z]{3}[0-9]{4}[A-Z]{1}$/;
+
+            if (!cctRegex.test(cctVal)) {
+                e.preventDefault();
+                document.getElementById('cct-input').style.borderColor = 'red';
+                Swal.fire('CCT inválida', 'La CCT debe tener el formato correcto (Ejemplo: 15EJN4255J).', 'error');
+                return;
+            }
+
+            if (cctVal !== cctConfirmVal) {
+                e.preventDefault();
+                document.getElementById('cct-input').style.borderColor = 'red';
+                document.getElementById('cct-confirm').style.borderColor = 'red';
+                Swal.fire('CCT no coincide', 'Las CCT ingresadas no son iguales. Verifique ambas entradas.', 'error');
+                return;
+            }
+
             const data = {
                 correo: document.getElementById('correo').value.trim(),
                 contrasena: document.getElementById('contrasena').value,
+                cct: cctVal,
                 nombres: document.getElementById('nombres').value.trim(),
                 apellido_p: document.getElementById('apellido_p').value.trim(),
                 apellido_m: document.getElementById('apellido_m').value.trim(),
@@ -180,7 +214,7 @@ require_once __DIR__ . '/../config/db.php';
                 .then(resp => {
                     if (resp.success) {
                         Swal.fire('Registro exitoso', 'Usuario registrado exitosamente.', 'success').then(() => {
-                            window.location.href = '/login';
+                            window.location.href = '/login?registro=exitoso';
                         });
                     } else {
                         Swal.fire('Error', resp.message, 'error');
@@ -189,6 +223,66 @@ require_once __DIR__ . '/../config/db.php';
                     console.error(err);
                     Swal.fire('Error en el servidor', 'Intenta nuevamente más tarde.', 'error');
                 });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const cctInput = document.getElementById('cct-input');
+            const cctConfirm = document.getElementById('cct-confirm');
+
+            cctInput.addEventListener('input', function() {
+                this.value = this.value.toUpperCase();
+                this.style.borderColor = '';
+            });
+
+            cctInput.addEventListener('blur', function() {
+                const cctValue = this.value.trim();
+                const cctRegex = /^[0-9]{2}[A-Z]{3}[0-9]{4}[A-Z]{1}$/;
+
+                if (!cctRegex.test(cctValue)) {
+                    this.style.borderColor = 'red';
+                    Swal.fire('CCT inválida', 'La Clave del Centro de Trabajo debe tener el formato correcto (Ejemplo: 15EJN4255J).', 'error');
+                } else {
+                    this.style.borderColor = 'green';
+                }
+            });
+
+            cctConfirm.addEventListener('input', function(e) {
+                const start = cctConfirm.selectionStart;
+                const end = cctConfirm.selectionEnd;
+                cctConfirm.value = cctConfirm.value.toUpperCase();
+                cctConfirm.setSelectionRange(start, end);
+                cctConfirm.style.borderColor = '';
+            });
+
+            cctConfirm.addEventListener('blur', function() {
+                const v1 = (cctInput.value || '').trim().toUpperCase();
+                const v2 = (cctConfirm.value || '').trim().toUpperCase();
+                if (v1 && v2 && v1 !== v2) {
+                    cctConfirm.style.borderColor = 'red';
+                    cctInput.style.borderColor = 'red';
+                    Swal.fire('CCT no coincide', 'Las CCT ingresadas no son iguales. Verifique ambas entradas.', 'error').then(() => {
+                        cctConfirm.focus();
+                        cctConfirm.select();
+                    });
+                } else if (v2) {
+                    cctConfirm.style.borderColor = 'green';
+                }
+            });
+
+            const nombresInput = document.getElementById('nombres');
+            const apellidoPInput = document.getElementById('apellido_p');
+            const apellidoMInput = document.getElementById('apellido_m');
+
+            [nombresInput, apellidoPInput, apellidoMInput].forEach(input => {
+                if (input) {
+                    input.addEventListener('input', function() {
+                        const start = this.selectionStart;
+                        const end = this.selectionEnd;
+                        this.value = this.value.toUpperCase();
+                        this.setSelectionRange(start, end);
+                    });
+                }
+            });
         });
     </script>
 </body>

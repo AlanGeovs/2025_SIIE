@@ -6,20 +6,11 @@
             </h4>
         </div>
 
-        <!-- Clave CCT -->
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label for="cct-input" class="form-label">1. Clave del Centro de Trabajo (CCT):</label>
-                <input type="text" maxlength="10" class="form-control form-control-sm" id="cct-input" name="cct"
-                    placeholder="Ejemplo: 15EJN4255J" required>
-                <div class="invalid-feedback">Ingrese la CCT.</div>
-            </div>
-        </div>
 
         <!-- CCT asociado -->
         <div class="row mb-3">
             <div class="col-md-12">
-                <label class="form-label">1.1 ¿El Centro de Trabajo cuenta con un CCT asociado a otro turno?<span class="text-danger">*</span></label>
+                <label class="form-label">1. ¿El Centro de Trabajo cuenta con un CCT asociado a otro turno?<span class="text-danger">*</span></label>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" id="cct-yes" name="cct_asociado" value="si" onclick="toggleOptions(true)" required>
                     <label class="form-check-label" for="cct-yes">Sí</label>
@@ -34,7 +25,7 @@
         <!-- Turnos asociados -->
         <div class="row mb-3" id="options" style="display:none;">
             <div class="col-md-12">
-                <label class="form-label">1.1.1 Turno <span class="text-muted">(selecciona uno o varios)</span>:</label>
+                <label class="form-label">1.1 Turno <span class="text-muted">(selecciona uno o varios)</span>:</label>
                 <div class="row">
                     <div class="col-sm-6 col-md-4">
                         <div class="form-check"><input class="form-check-input" type="checkbox" name="turnos_asociados[]" value="Matutino"><label class="form-check-label">Matutino 8:00 a 12:30</label></div>
@@ -158,8 +149,8 @@
             </div>
             <div class="col-md-4 d-flex align-items-end pt-2"> <!-- Mantiene alineación -->
                 <label class="btn btn-evidencia w-100">
-                  Agregar evidencia
-                  <input type="file" class="evidencia-input" data-modulo="1" style="display:none;">
+                    Agregar evidencia
+                    <input type="file" class="evidencia-input" data-modulo="1" style="display:none;">
                 </label>
             </div>
         </div>
@@ -294,78 +285,26 @@
     }
 </script>
 
-<!-- CCT Input validation and formatting -->
+
+<!-- Uppercase conversion for nombre_plantel, calle, colonia -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const cctInput = document.getElementById('cct-input');
-        if (!cctInput) return;
-
-        // Forzar mayúsculas mientras escribe
-        cctInput.addEventListener('input', function(e) {
-            const start = cctInput.selectionStart;
-            const end = cctInput.selectionEnd;
-            cctInput.value = cctInput.value.toUpperCase();
-            // Mantener el cursor en la posición adecuada
-            cctInput.setSelectionRange(start, end);
-        });
-
-        // Validación al perder el foco
-        cctInput.addEventListener('blur', function() {
-            const value = cctInput.value.trim().toUpperCase();
-            // Regex para CCT: 2 dígitos, 3 letras, 4 dígitos, 1 letra/dígito
-            const cctRegex = /^[0-9]{2}[A-Z]{3}[0-9]{4}[A-Z0-9]$/;
-            let valid = true;
-            let errorMsg = '';
-            if (!cctRegex.test(value)) {
-                valid = false;
-                errorMsg = 'La Clave del Centro de Trabajo (CCT) debe tener el formato correcto: 2 dígitos, 3 letras, 4 dígitos y una letra o número (ejemplo: 15EJN4255J).';
-            } else {
-                // Validaciones adicionales
-                const entidad = value.substring(0, 2);
-                const tipo = value.substring(2, 5);
-                // Lista de entidades válidas (01 a 32)
-                const entidadesValidas = Array.from({
-                    length: 32
-                }, (_, i) => String(i + 1).padStart(2, '0'));
-                if (!entidadesValidas.includes(entidad)) {
-                    valid = false;
-                    errorMsg = 'Los primeros dos dígitos deben corresponder a una entidad federativa válida (01 a 32).';
-                } else {
-                    // Validar que los caracteres 3 al 5 sean únicamente letras mayúsculas
-                    if (!/^[A-Z]{3}$/.test(tipo)) {
-                        valid = false;
-                        errorMsg = 'Los caracteres 3 al 5 deben ser tres letras.';
-                    }
-                    // Tipos válidos (no se valida contra este arreglo, pero podría usarse en el futuro para restringir los tipos permitidos)
-                    /*
-                    // Arreglo de tipos válidos para referencia futura:
-                    const tiposValidos = [
-                        'DGL','DGJ','DGT','DGZ','EBA','EBC','EBD','EBE','EBF','EBG','EBH','EBI','EBJ','EBK','EBL','EBM','EBN','EBO','EBP','EBQ','EBR','EBS','EBT','EBU','EBV','EBW','EBX','EBY','EBZ',
-                        'ECA','ECB','ECC','ECD','ECE','ECF','ECG','ECH','ECI','ECJ','ECK','ECL','ECM','ECN','ECO','ECP','ECQ','ECR','ECS','ECT','ECU','ECV','ECW','ECX','ECY','ECZ',
-                        'EJA','EJB','EJC','EJD','EJE','EJF','EJG','EJH','EJI','EJJ','EJK','EJL','EJM','EJN','EJO','EJP','EJQ','EJR','EJS','EJT','EJU','EJV','EJW','EJX','EJY','EJZ',
-                        'EMS','EMI','EMS','EMT','EMX','EMZ','ESA','ESB','ESC','ESD','ESE','ESF','ESG','ESH','ESI','ESJ','ESK','ESL','ESM','ESN','ESO','ESP','ESQ','ESR','ESS','EST','ESU','ESV','ESW','ESX','ESY','ESZ',
-                        'PRM','SEC','PRE','BAC','LIC','POS'
-                    ];
-                    // Si se requiere validar tipos específicos, descomentar y usar la siguiente validación:
-                    // if (!tiposValidos.includes(tipo)) {
-                    //     valid = false;
-                    //     errorMsg = 'El tipo de centro (letras 3-5) no corresponde a un tipo válido.';
-                    // }
-                    */
+        // Helper to force uppercase on input fields
+        function enforceUppercase(input) {
+            input.addEventListener('input', function() {
+                // Only update if value is not already uppercase to avoid moving cursor
+                if (this.value !== this.value.toUpperCase()) {
+                    this.value = this.value.toUpperCase();
                 }
-            }
-
-            if (!valid) {
-                cctInput.style.borderColor = 'red';
-                Swal.fire({
-                    icon: 'error',
-                    title: 'CCT inválida',
-                    text: errorMsg
-                });
-            } else {
-                cctInput.style.borderColor = 'green';
-            }
-        });
+            });
+        }
+        // Get the inputs by name
+        const nombrePlantel = document.querySelector('input[name="nombre_plantel"]');
+        const calle = document.querySelector('input[name="calle"]');
+        const colonia = document.querySelector('input[name="colonia"]');
+        if (nombrePlantel) enforceUppercase(nombrePlantel);
+        if (calle) enforceUppercase(calle);
+        if (colonia) enforceUppercase(colonia);
     });
 </script>
 
@@ -449,6 +388,9 @@
             }
 
             const formData = new FormData(form);
+            // Agregar id_ficha y cct desde la sesión PHP
+            formData.append('id_ficha', "<?= $_SESSION['id_ficha'] ?? '' ?>");
+            formData.append('cct', "<?= $_SESSION['cct'] ?? '' ?>");
 
             try {
                 const response = await fetch('../controllers/enviadatos_modulo_1.php', {
@@ -462,6 +404,17 @@
                         icon: 'success',
                         title: 'Éxito',
                         text: result.message || 'Los datos se guardaron correctamente.'
+                    }).then(() => {
+                        const redirectForm = document.createElement('form');
+                        redirectForm.method = 'POST';
+                        redirectForm.action = 'dashboard';
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'modulo';
+                        input.value = '2';
+                        redirectForm.appendChild(input);
+                        document.body.appendChild(redirectForm);
+                        redirectForm.submit();
                     });
                     form.reset();
                     form.classList.remove('was-validated');

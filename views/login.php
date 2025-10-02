@@ -101,6 +101,11 @@ if (isset($_SESSION['usuario_id'])) {
                     <?= htmlspecialchars($_GET['error']) ?>
                 </div>
             <?php endif; ?>
+            <?php if (isset($_GET['registro']) && $_GET['registro'] === 'exitoso'): ?>
+                <div class="alert alert-success mt-3 text-center">
+                    Registro exitoso. Ahora debe iniciar sesión con sus datos.
+                </div>
+            <?php endif; ?>
             <div class="text-end mt-2">
                 <a href="/recuperar">Olvidé mi contraseña</a>
             </div>

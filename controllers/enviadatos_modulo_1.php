@@ -17,6 +17,7 @@ try {
     }
 
     $id_usuario = $_SESSION['usuario_id'];
+    $id_ficha = $_SESSION['id_ficha'] ?? null;
 
     // Campos requeridos
     $required = ['cct', 'nombre_plantel', 'entidad', 'municipio'];
@@ -28,15 +29,15 @@ try {
     }
 
     // Recibir datos
-    $cct = trim($_POST['cct']);
-    $nombre_plantel = trim($_POST['nombre_plantel']);
+    $cct = trim($_SESSION['cct']);
+    $nombre_plantel = mb_strtoupper(trim($_POST['nombre_plantel']), 'UTF-8');
     $cct_asociado = $_POST['cct_asociado'] ?? null;
-    $calle = $_POST['calle'] ?? null;
+    $calle = isset($_POST['calle']) ? mb_strtoupper(trim($_POST['calle']), 'UTF-8') : null;
     $n_int = $_POST['n_int'] ?? null;
     $n_ext = $_POST['n_ext'] ?? null;
     $entidad = $_POST['entidad'];
     $municipio = $_POST['municipio'];
-    $colonia = $_POST['colonia'] ?? null;
+    $colonia = isset($_POST['colonia']) ? mb_strtoupper(trim($_POST['colonia']), 'UTF-8') : null;
     $n_salones = !empty($_POST['n_salones']) ? intval($_POST['n_salones']) : 0;
     $n_alumnos = !empty($_POST['n_alumnos']) ? intval($_POST['n_alumnos']) : 0;
     $nivel = $_POST['nivel_escolar'] ?? null;
@@ -46,17 +47,29 @@ try {
     // $opcion_arqueolo = $_POST['opcion_arqueolo'] ??  
     $inmueble_hist = $_POST['opcion_arqueolo'] ?? null;
 
-    // Insertar
-    $sql = "INSERT INTO fichas 
-        (cct, nombre_plantel, cct_asociado, calle, n_int, n_ext, entidad, municipio, colonia, 
-         n_salones, n_alumnos, nivel, turno, antiguedad, catalogado, inmueble_hist, id_usuario, m1)
-        VALUES 
-        (:cct, :nombre_plantel, :cct_asociado, :calle, :n_int, :n_ext, :entidad, :municipio, :colonia, 
-         :n_salones, :n_alumnos, :nivel, :turno, :antiguedad, :catalogado, :inmueble_hist, :id_usuario, :m1)";
+    // Actualizar
+    $sql = "UPDATE fichas SET
+        nombre_plantel = :nombre_plantel,
+        cct_asociado = :cct_asociado,
+        calle = :calle,
+        n_int = :n_int,
+        n_ext = :n_ext,
+        entidad = :entidad,
+        municipio = :municipio,
+        colonia = :colonia,
+        n_salones = :n_salones,
+        n_alumnos = :n_alumnos,
+        nivel = :nivel,
+        turno = :turno,
+        antiguedad = :antiguedad,
+        catalogado = :catalogado,
+        inmueble_hist = :inmueble_hist,
+        id_usuario = :id_usuario,
+        m1 = :m1
+        WHERE id_ficha = :id_ficha AND cct = :cct";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
-        ':cct' => $cct,
         ':nombre_plantel' => $nombre_plantel,
         ':cct_asociado' => $cct_asociado,
         ':calle' => $calle,
@@ -74,6 +87,8 @@ try {
         ':inmueble_hist' => $inmueble_hist,
         ':id_usuario' => $id_usuario,
         ':m1' => 1,
+        ':id_ficha' => $id_ficha,
+        ':cct' => $cct,
     ]);
 
     // Actualizar CCT en la tabla usuarios

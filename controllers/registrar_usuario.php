@@ -12,11 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $correo = trim($input['correo'] ?? '');
     $password = trim($input['contrasena'] ?? '');
     $confirmar = trim($input['confirmar'] ?? $password);
-    $nombres = trim($input['nombres'] ?? '');
-    $apellido_p = trim($input['apellido_p'] ?? '');
-    $apellido_m = trim($input['apellido_m'] ?? '');
+    $nombres = mb_strtoupper(trim($input['nombres'] ?? ''), 'UTF-8');
+    $apellido_p = mb_strtoupper(trim($input['apellido_p'] ?? ''), 'UTF-8');
+    $apellido_m = mb_strtoupper(trim($input['apellido_m'] ?? ''), 'UTF-8');
     $telefono_fijo = trim($input['telefono_fijo'] ?? '');
     $telefono_movil = trim($input['telefono_movil'] ?? '');
+    $cct = trim($input['cct'] ?? '');
 
     error_log("Correo recibido: '$correo'");
     if (!$correo || !filter_var($correo, FILTER_VALIDATE_EMAIL)) {
@@ -48,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Encriptar la contraseña
         $hash = password_hash($password, PASSWORD_BCRYPT);
 
-        // Insertar en la base de datos
-        $stmt = $conn->prepare("INSERT INTO usuarios (nombre, correo, password, nombres, apellido_p, apellido_m, telefono_fijo, telefono_movil, tipo_usuario, activo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        // Insertar en la base de datos (sin id_ficha por ahora)
+        $stmt = $conn->prepare("INSERT INTO usuarios (nombre, correo, password, nombres, apellido_p, apellido_m, telefono_fijo, telefono_movil, tipo_usuario, activo, cct) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $nombre_completo = "$nombres $apellido_p $apellido_m";
         $stmt->execute([
             $nombre_completo,
@@ -61,8 +62,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             (int) $telefono_fijo,
             (int) $telefono_movil,
             'capturista',
-            1
+            1,
+            $cct
         ]);
+
+        $user_id = $conn->lastInsertId();
+
+        // Insertar en fichas con el CCT y el user_id
+        $stmt = $conn->prepare("INSERT INTO fichas (cct, id_usuario) VALUES (?, ?)");
+        $stmt->execute([$cct, $user_id]);
+
+        $id_ficha = $conn->lastInsertId();
+
+        // Actualizar usuario con id_ficha
+        $stmt = $conn->prepare("UPDATE usuarios SET id_ficha = ? WHERE id = ?");
+        $stmt->execute([$id_ficha, $user_id]);
 
         echo json_encode(['success' => true, 'message' => 'Registro exitoso']);
     } catch (PDOException $e) {
