@@ -35,7 +35,7 @@ try {
     $calle = isset($_POST['calle']) ? mb_strtoupper(trim($_POST['calle']), 'UTF-8') : null;
     $n_int = $_POST['n_int'] ?? null;
     $n_ext = $_POST['n_ext'] ?? null;
-    $entidad = $_POST['entidad'];
+    $entidad = mb_strtoupper(trim($_POST['entidad']), 'UTF-8');
     $municipio = $_POST['municipio'];
     $colonia = isset($_POST['colonia']) ? mb_strtoupper(trim($_POST['colonia']), 'UTF-8') : null;
     $n_salones = !empty($_POST['n_salones']) ? intval($_POST['n_salones']) : 0;

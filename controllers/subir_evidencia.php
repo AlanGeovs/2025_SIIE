@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // Validar parámetros requeridos
-$required = ['cct', 'modulo', 'id_ficha', 'id_usuario', 'nombre_doc'];
+$required = ['cct', 'modulo', 'id_ficha', 'id_usuario', 'nombre_doc', 'pregunta'];
 foreach ($required as $param) {
     if (empty($_POST[$param])) {
         echo json_encode(['success' => false, 'message' => "Falta el parámetro: $param"]);
@@ -42,11 +42,12 @@ $modulo = intval($_POST['modulo']);
 $id_ficha = intval($_POST['id_ficha']);
 $id_usuario = intval($_POST['id_usuario']);
 $nombre_original = basename($_POST['nombre_doc']);
+$pregunta = trim($_POST['pregunta']);
 
 // Nombre del archivo
 $extension = strtolower(pathinfo($_FILES['evidencia']['name'], PATHINFO_EXTENSION));
 $timestamp = time();
-$nombre_archivo = "{$cct}-M{$modulo}-F{$id_ficha}-{$timestamp}.{$extension}";
+$nombre_archivo = "{$cct}-F{$id_ficha}-M{$modulo}-{$pregunta}-{$timestamp}.{$extension}";
 $nombre_archivo = str_replace(' ', '_', $nombre_archivo);
 
 // Directorio
@@ -60,15 +61,16 @@ $destino = $dir . '/' . $nombre_archivo;
 if (move_uploaded_file($_FILES['evidencia']['tmp_name'], $destino)) {
     try {
         require_once __DIR__ . '/../config/db.php';
-        $sql = "INSERT INTO evidencias (id_ficha, cct, modulo, nombre_doc, id_usuario)
-                VALUES (:id_ficha, :cct, :modulo, :nombre_doc, :id_usuario)";
+        $sql = "INSERT INTO evidencias (id_ficha, cct, modulo, nombre_doc, id_usuario, pregunta) 
+                VALUES (:id_ficha, :cct, :modulo, :nombre_doc, :id_usuario, :pregunta)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
             ':id_ficha' => $id_ficha,
             ':cct' => $cct,
             ':modulo' => $modulo,
             ':nombre_doc' => $nombre_archivo,
-            ':id_usuario' => $id_usuario
+            ':id_usuario' => $id_usuario,
+            ':pregunta' => $pregunta
         ]);
         echo json_encode(['success' => true, 'filename' => $nombre_archivo]);
     } catch (Exception $e) {

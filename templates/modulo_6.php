@@ -45,9 +45,13 @@
             </div>
 
             <div class="col-md-4 mb-2 text-md-begin">
-                <label class="form-label d-block invisible">Botón</label>
-                <button type="button" class="btn btn-primary">Agregar evidencia</button>
+                <label class="btn btn-evidencia">
+                    Agregar evidencia
+                    <input type="file" class="evidencia-input" data-modulo="6_documento_propiedad" style="display:none;">
+                </label>
             </div>
+
+
         </div>
 
         <!-- Pregunta 6.1 -->
@@ -134,20 +138,38 @@
                         <td class="text-start">${tipo}</td>
                         <td>
                             <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" name="${key}" id="${key}_si" value="si">
+                                <input type="radio" class="form-check-input plano-radio" name="${key}" id="${key}_si" value="si" data-key="${key}">
                                 <label class="form-check-label" for="${key}_si">Sí</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" name="${key}" id="${key}_no" value="no"> 
+                                <input type="radio" class="form-check-input plano-radio" name="${key}" id="${key}_no" value="no" data-key="${key}"> 
                                 <label class="form-check-label" for="${key}_no">No</label>
                             </div>
                         </td>
                         <td>
-                            <button class="btn btn-primary btn-sm" type="button">Agregar evidencia</button>
+                            <label class="btn btn-evidencia">
+                                Agregar evidencia
+                                <input type="file" class="evidencia-input" data-modulo="6_${key}" style="display:none;" disabled>
+                            </label>
                         </td>
                     </tr>
                 `;
                 tbody.insertAdjacentHTML("beforeend", fila);
+            });
+
+            // Add event listeners to radio buttons to enable/disable file inputs
+            const radios = document.querySelectorAll(".plano-radio");
+            radios.forEach(radio => {
+                radio.addEventListener("change", function() {
+                    const key = this.getAttribute("data-key");
+                    const fileInput = document.querySelector(`input.evidencia-input[data-modulo="6_${key}"]`);
+                    if (this.value === "si") {
+                        fileInput.disabled = false;
+                    } else {
+                        fileInput.value = "";
+                        fileInput.disabled = true;
+                    }
+                });
             });
         }
 

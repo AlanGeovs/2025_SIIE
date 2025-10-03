@@ -1,5 +1,6 @@
 <div class="tab-pane" id="progress-personal-info">
     <form id="form-modulo-1" class="needs-validation" novalidate>
+        <input type="hidden" name="entidad" value="<?= htmlspecialchars($entidadNombre) ?>">
         <div class="card-header mb-4">
             <h4 class="card-title" style="color:#611232; font-size: 22px; font-weight:bold;">
                 I. DATOS DEL CENTRO DE TRABAJO
@@ -74,17 +75,15 @@
                 <label class="form-label">No. Ext:<span class="text-danger">*</span></label>
                 <input type="text" class="form-control form-control-sm" placeholder="No. Ext" name="n_ext" required>
             </div>
-            <div class="col-md-4 mb-2">
-                <label class="form-label">Entidad:<span class="text-danger">*</span></label>
-                <input type="text" class="form-control form-control-sm" placeholder="Entidad federativa" name="entidad" required>
-                <div class="invalid-feedback">Ingrese la entidad.</div>
-            </div>
+            <!-- Eliminado campo Entidad -->
         </div>
         <div class="row mb-3">
             <div class="col-md-6 mb-2">
                 <label class="form-label">Municipio:<span class="text-danger">*</span></label>
-                <input type="text" class="form-control form-control-sm" placeholder="Municipio" name="municipio" required>
-                <div class="invalid-feedback">Ingrese el municipio.</div>
+                <select class="form-select form-select-sm" name="municipio" id="municipio-select" required>
+                    <option value="">Seleccione un municipio</option>
+                </select>
+                <div class="invalid-feedback">Seleccione el municipio.</div>
             </div>
             <div class="col-md-6 mb-2">
                 <label class="form-label">Colonia:<span class="text-danger">*</span></label>
@@ -150,7 +149,7 @@
             <div class="col-md-4 d-flex align-items-end pt-2"> <!-- Mantiene alineación -->
                 <label class="btn btn-evidencia w-100">
                     Agregar evidencia
-                    <input type="file" class="evidencia-input" data-modulo="1" style="display:none;">
+                    <input type="file" class="evidencia-input" data-modulo="1.2" style="display:none;">
                 </label>
             </div>
         </div>
@@ -198,7 +197,7 @@
                         <div class="d-flex align-items-center pt-2">
                             <label class="btn btn-evidencia w-100" id="toggle-dropzone" style="margin-left: 0px; display:none;">
                                 Agregar evidencia
-                                <input type="file" class="evidencia-input" data-modulo="1" style="display:none;">
+                                <input type="file" class="evidencia-input" data-modulo="1.3" style="display:none;">
                             </label>
                         </div>
                         <div id="dropzone-container" style="display:none;">
@@ -305,6 +304,34 @@
         if (nombrePlantel) enforceUppercase(nombrePlantel);
         if (calle) enforceUppercase(calle);
         if (colonia) enforceUppercase(colonia);
+
+        // ---- MUNICIPIO SELECT AJAX ----
+        // Obtener id_ent de la sesión PHP (primeros dos dígitos de $_SESSION['cct'])
+        <?php
+        $cct = $_SESSION['cct'] ?? '';
+        $id_ent = substr($cct, 0, 2);
+        ?>
+        const idEnt = "<?= $id_ent ?>";
+        const municipioSelect = document.getElementById('municipio-select');
+        if (municipioSelect && idEnt) {
+            fetch('../controllers/get_municipios.php?id_ent=' + encodeURIComponent(idEnt))
+                .then(response => response.json())
+                .then(data => {
+                    if (Array.isArray(data)) {
+                        municipioSelect.innerHTML = '<option value="">Seleccione un municipio</option>';
+                        data.forEach(function(mun) {
+                            const opt = document.createElement('option');
+                            opt.value = mun.mun;
+                            opt.textContent = mun.mun;
+                            municipioSelect.appendChild(opt);
+                        });
+                    }
+                })
+                .catch(() => {
+                    municipioSelect.innerHTML = '<option value="">No se pudieron cargar municipios</option>';
+                });
+        }
+        // ---- END MUNICIPIO SELECT AJAX ----
     });
 </script>
 
@@ -341,6 +368,20 @@
                 }
             }
             // --- End custom validation ---
+
+            // --- Custom validation for municipio (select required) ---
+            const municipioSelect = form.querySelector('select[name="municipio"]');
+            if (municipioSelect && !municipioSelect.value) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Campo obligatorio',
+                    text: 'Debe seleccionar el municipio.'
+                });
+                municipioSelect.classList.add('is-invalid');
+                return;
+            } else if (municipioSelect) {
+                municipioSelect.classList.remove('is-invalid');
+            }
 
             // --- Enhanced validation & UI feedback for catalogado ---
             // Get radio buttons and select

@@ -190,6 +190,8 @@ if ($idFichaSesion > 0) {
                 formData.append('id_ficha', idFicha);
                 formData.append('id_usuario', idUsuario);
                 formData.append('nombre_doc', file.name);
+                // Agregar campo pregunta usando el valor de this.dataset.modulo
+                formData.append('pregunta', this.dataset.modulo || '');
 
                 // Feedback de carga
                 const loadingSwal = Swal.fire({
