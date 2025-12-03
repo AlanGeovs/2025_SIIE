@@ -61,7 +61,7 @@ if ($id_ficha) {
                         <div class="bd-callout bd-callout-danger d-flex align-items-start mt-2 p-3" id="mensajeEdificios" style="display:none;">
                             <i class="bi bi-exclamation-triangle-fill me-2 flex-shrink-0" style="font-size: 1.2rem; margin-top: 2px; color: #842029;"></i>
                             <div>
-                                Asigna un <b>número a cada edificio</b>, empezando por el de mayor tamaño o uso (e importancia), y concluyendo con el menor.
+                                Asigna un <b>número a cada edificio</b>, empezando por el de mayor tamaño o uso -e importancia-, y concluyendo con el menor.
                             </div>
                         </div>
                         <div class="table-responsive">

@@ -1340,7 +1340,7 @@ input[name="capacitacion_${index}"]`
                         Swal.fire({
                             icon: 'success',
                             title: '¡Datos guardados!',
-                            text: 'El Módulo 4 se guardó correctamente.',
+                            text: 'El Módulo "IV. Protección civil y seguridad estructural" se guardó correctamente',
                             confirmButtonColor: '#611232'
                         }).then(() => {
                             const redirectForm = document.createElement('form');

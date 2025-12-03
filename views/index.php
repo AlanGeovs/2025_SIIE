@@ -100,10 +100,43 @@
     </header>
 
 
-    <!-- Floating Sistema de Alerta de Daños Button -->
-    <a href="https://sia.inifed.mx" target="_blank" class="btn-alerta-danos">
+    <!-- Floating Sistema de Alerta de Daños -->
+    <!-- Versión móvil: botón flotante inferior -->
+    <a href="https://sia.inifed.mx" target="_blank" class="btn-alerta-danos d-md-none"
+        style="position: fixed; bottom: 20px; right: 20px; z-index: 1050;">
         <i class="fas fa-exclamation-triangle me-2"></i>Sistema de Alerta de Daños
     </a>
+
+    <!-- 🔴 Imagen flotante (solo escritorio) -->
+    <a href="https://sia.inifed.mx" target="_blank" class="d-none d-md-block"
+        style="position: fixed; top: 85px; right: 25px; z-index: 1050; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+        <img src="../public/assets/img/sia-min.png"
+            alt="Sistema de Alerta de Daños"
+            style="width: 140px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+    </a>
+
+    <style>
+        @keyframes pulse-glow-desktop {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, .3);
+            }
+
+            50% {
+                transform: scale(1.08);
+                box-shadow: 0 0 25px rgba(105, 28, 50, .7);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, .3);
+            }
+        }
+
+        .d-md-block:hover img {
+            animation: pulse-glow-desktop 1.2s ease-in-out;
+        }
+    </style>
 
 
 
@@ -143,140 +176,6 @@
     </section>
 
 
-
-    <!-- Sección informativa sobre ciclones -->
-    <!-- <section class="section-info" style="background-color: #fff;">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6 mb-4 mb-md-0">
-                    <img src="https://www.gob.mx/cms/uploads/article/main_image/156124/Banner_blog.jpg" alt="Banner ciclones" class="img-fluid rounded shadow">
-                </div>
-                <div class="col-md-6">
-                    <h3 style="color:#691c32; font-weight: bold;">Inicia la temporada de ciclones tropicales y lluvias intensas 2025</h3>
-                    <p>Oficialmente empieza el 15 de mayo en el océano Pacífico y el 1 de junio en el océano Atlántico, termina en ambos el 30 de noviembre.</p>
-                    <p>Es importante que sepas que los ciclones pueden presentarse con una ligera variación, antes o después; por lo que debemos estar siempre preparados ante el riesgo de lluvias, vientos fuertes, deslaves e inundaciones.</p>
-                    <a href="https://www.gob.mx/cenapred/es/articulos/ya-comenzo-la-temporada-de-ciclones-tropicales-y-lluvias-intensas-2025?idiom=es" class="btn-sia-rojo" target="_blank">Leer más</a>
-                </div>
-            </div>
-
-            
-            <div class="mt-5">
-                <div id="documentosCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
-                    <div class="carousel-inner">
-
-                       
-                        <div class="carousel-item active">
-                            <div class="d-flex justify-content-center gap-4 flex-wrap">
-                                <div class="card p-3 border rounded col-12 col-md-auto" style="width: 18rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                                    <h5 class="card-title">
-                                        <a href="http://www.cenapred.unam.mx/es/Publicaciones/archivos/5-FASCCULOCICLONESTROPICALES.PDF" target="_blank" style="text-decoration: none; color: inherit;">
-                                            Ciclones Tropicales
-                                        </a>
-                                    </h5>
-                                    <p class="card-text">Fascículo informativo sobre medidas preventivas ante ciclones.</p>
-                                    <a href="http://www.cenapred.unam.mx/es/Publicaciones/archivos/5-FASCCULOCICLONESTROPICALES.PDF" target="_blank">Ver documento</a>
-                                </div>
-                                <div class="card p-3 border rounded col-12 col-md-auto" style="width: 18rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                                    <h5 class="card-title">
-                                        <a href="http://www.cenapred.unam.mx/es/Publicaciones/archivos/189-FASCCULOTORMENTASSEVERAS.PDF" target="_blank" style="text-decoration: none; color: inherit;">
-                                            Tormentas Severas
-                                        </a>
-                                    </h5>
-                                    <p class="card-text">Conoce cómo actuar ante tormentas eléctricas intensas.</p>
-                                    <a href="http://www.cenapred.unam.mx/es/Publicaciones/archivos/189-FASCCULOTORMENTASSEVERAS.PDF" target="_blank">Ver documento</a>
-                                </div>
-                                <div class="card p-3 border rounded col-12 col-md-auto" style="width: 18rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                                    <h5 class="card-title">
-                                        <a href="http://www.cenapred.unam.mx/es/Publicaciones/archivos/184-FOLLETOINUNDACIONES.PDF" target="_blank" style="text-decoration: none; color: inherit;">
-                                            Inundaciones
-                                        </a>
-                                    </h5>
-                                    <p class="card-text">Folleto con recomendaciones clave en caso de inundaciones.</p>
-                                    <a href="http://www.cenapred.unam.mx/es/Publicaciones/archivos/184-FOLLETOINUNDACIONES.PDF" target="_blank">Ver documento</a>
-                                </div>
-                            </div>
-                        </div>
-
-                      
-                        <div class="carousel-item">
-                            <div class="d-flex justify-content-center gap-4 flex-wrap">
-                                <div class="card p-3 border rounded col-12 col-md-auto" style="width: 18rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                                    <h5 class="card-title">
-                                        <a href="http://www.cenapred.unam.mx/es/Publicaciones/archivos/278-INFOGRAFATEMPORADADELLUVIAS(PARAAUTORIDADES).PDF" target="_blank" style="text-decoration: none; color: inherit;">
-                                            Temporada de Lluvias
-                                        </a>
-                                    </h5>
-                                    <p class="card-text">Infografía para autoridades sobre riesgos por lluvias.</p>
-                                    <a href="http://www.cenapred.unam.mx/es/Publicaciones/archivos/278-INFOGRAFATEMPORADADELLUVIAS(PARAAUTORIDADES).PDF" target="_blank">Ver documento</a>
-                                </div>
-                                <div class="card p-3 border rounded col-12 col-md-auto" style="width: 18rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                                    <h5 class="card-title">
-                                        <a href="http://www.cenapred.unam.mx/es/Publicaciones/archivos/346-POSTALCICLNACERCNDOSE.PDF" target="_blank" style="text-decoration: none; color: inherit;">
-                                            Ciclón Acercándose
-                                        </a>
-                                    </h5>
-                                    <p class="card-text">Acciones ante la llegada de un ciclón tropical.</p>
-                                    <a href="http://www.cenapred.unam.mx/es/Publicaciones/archivos/346-POSTALCICLNACERCNDOSE.PDF" target="_blank">Ver documento</a>
-                                </div>
-                                <div class="card p-3 border rounded col-12 col-md-auto" style="width: 18rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                                    <h5 class="card-title">
-                                        <a href="http://www.cenapred.unam.mx/es/Publicaciones/archivos/347-POSTALCICLNALEJNDOSE.PDF" target="_blank" style="text-decoration: none; color: inherit;">
-                                            Ciclón Alejándose
-                                        </a>
-                                    </h5>
-                                    <p class="card-text">Precauciones una vez que el ciclón se ha alejado.</p>
-                                    <a href="http://www.cenapred.unam.mx/es/Publicaciones/archivos/347-POSTALCICLNALEJNDOSE.PDF" target="_blank">Ver documento</a>
-                                </div>
-                            </div>
-                        </div>
-
-                 
-                        <div class="carousel-item">
-                            <div class="d-flex justify-content-center gap-4 flex-wrap">
-                                <div class="card p-3 border rounded col-12 col-md-auto" style="width: 18rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                                    <h5 class="card-title">
-                                        <a href="http://www.cenapred.unam.mx/es/Publicaciones/archivos/259-INFOGRAFAENCASODEINUNDACIN.PDF" target="_blank" style="text-decoration: none; color: inherit;">
-                                            En caso de Inundación
-                                        </a>
-                                    </h5>
-                                    <p class="card-text">Infografía para actuar con rapidez en caso de emergencia.</p>
-                                    <a href="http://www.cenapred.unam.mx/es/Publicaciones/archivos/259-INFOGRAFAENCASODEINUNDACIN.PDF" target="_blank">Ver documento</a>
-                                </div>
-                                <div class="card p-3 border rounded col-12 col-md-auto" style="width: 18rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                                    <h5 class="card-title">
-                                        <a href="http://www.cenapred.unam.mx/es/Publicaciones/archivos/308-INFOGRAFAINUNDACIONESSBITAS.PDF" target="_blank" style="text-decoration: none; color: inherit;">
-                                            Inundaciones Súbitas
-                                        </a>
-                                    </h5>
-                                    <p class="card-text">Cómo prevenir y responder ante una inundación inesperada.</p>
-                                    <a href="http://www.cenapred.unam.mx/es/Publicaciones/archivos/308-INFOGRAFAINUNDACIONESSBITAS.PDF" target="_blank">Ver documento</a>
-                                </div>
-                                <div class="card p-3 border rounded col-12 col-md-auto" style="width: 18rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                                    <h5 class="card-title">
-                                        <a href="http://www.cenapred.unam.mx/es/Publicaciones/archivos/378-INFOGRAFAMIPLANFAMILIARENTEMPORADADELLUVIAS.PDF" target="_blank" style="text-decoration: none; color: inherit;">
-                                            Mi Plan Familiar
-                                        </a>
-                                    </h5>
-                                    <p class="card-text">Guía para preparar a tu familia para lluvias intensas.</p>
-                                    <a href="http://www.cenapred.unam.mx/es/Publicaciones/archivos/378-INFOGRAFAMIPLANFAMILIARENTEMPORADADELLUVIAS.PDF" target="_blank">Ver documento</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                  
-                    <button class="carousel-control-prev" type="button" data-bs-target="#documentosCarousel" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" style="filter: brightness(0) saturate(100%) invert(83%) sepia(0%) saturate(0%) hue-rotate(156deg) brightness(95%) contrast(92%);"></span>
-                        <span class="visually-hidden">Anterior</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#documentosCarousel" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" style="filter: brightness(0) saturate(100%) invert(83%) sepia(0%) saturate(0%) hue-rotate(156deg) brightness(95%) contrast(92%);"></span>
-                        <span class="visually-hidden">Siguiente</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section> -->
 
 
     <!-- Sección de soporte -->

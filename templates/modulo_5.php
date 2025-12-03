@@ -145,7 +145,7 @@
                 Swal.fire({
                     icon: "success",
                     title: "¡Éxito!",
-                    text: "Módulo 5 guardado correctamente."
+                    text: "Módulo 'V. Inversión pública' guardado correctamente"
                 }).then(() => {
                     // Redirigir al módulo 6
                     const formPost = document.createElement("form");

@@ -204,7 +204,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Éxito',
-                        text: 'Módulo "VI. DATOS LEGALES DEL CENTRO DE TRABAJO" guardado correctamente'
+                        text: 'Módulo "VI. Datos legales del Centro de Trabajo" guardado correctamente'
                     });
                 } else {
                     Swal.fire({

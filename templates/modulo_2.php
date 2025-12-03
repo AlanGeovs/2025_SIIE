@@ -1276,7 +1276,7 @@
                                 Swal.fire({
                                     icon: 'success',
                                     title: '¡Datos guardados!',
-                                    text: 'El Módulo 2 se guardó correctamente.',
+                                    text: 'El Módulo "II. Accesibilidad y servicios básicos del Centro de Trabajo" se guardó correctamente',
                                     confirmButtonColor: '#611232'
                                 }).then(() => {
                                     // Crear y enviar formulario oculto para redirigir a módulo 3

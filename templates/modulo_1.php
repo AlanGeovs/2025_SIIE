@@ -146,12 +146,6 @@
                 </select>
                 <div class="invalid-feedback">Seleccione la antigüedad del inmueble.</div>
             </div>
-            <div class="col-md-4 d-flex align-items-end pt-2"> <!-- Mantiene alineación -->
-                <label class="btn btn-evidencia w-100">
-                    Agregar evidencia
-                    <input type="file" class="evidencia-input" data-modulo="1.2" style="display:none;">
-                </label>
-            </div>
         </div>
 
         <!-- Catalogación -->

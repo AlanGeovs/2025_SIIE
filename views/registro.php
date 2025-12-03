@@ -107,7 +107,7 @@ require_once __DIR__ . '/../config/db.php';
                         <div class="invalid-feedback">Confirma la CCT.</div>
                     </div>
                 </div>
-                <h5 class="mt-4 mb-3">Nombre de la o el director del centro de trabajo</h5>
+                <h5 class="mt-4 mb-3">Nombre de la o el director del Centro de Trabajo</h5>
                 <div class="row g-3">
                     <div class="col-md-4">
                         <label>Nombre(s) <span class="text-danger">*</span></label>
@@ -214,7 +214,7 @@ require_once __DIR__ . '/../config/db.php';
                 .then(resp => {
                     if (resp.success) {
                         Swal.fire('Registro exitoso', 'Usuario registrado exitosamente.', 'success').then(() => {
-                            window.location.href = '/login?registro=exitoso';
+                            window.location.href = '/dashboard';
                         });
                     } else {
                         Swal.fire('Error', resp.message, 'error');

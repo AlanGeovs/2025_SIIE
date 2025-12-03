@@ -78,7 +78,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $conn->prepare("UPDATE usuarios SET id_ficha = ? WHERE id = ?");
         $stmt->execute([$id_ficha, $user_id]);
 
-        echo json_encode(['success' => true, 'message' => 'Registro exitoso']);
+        // Iniciar sesión automática
+        session_regenerate_id(true);
+        $_SESSION['usuario_id'] = $user_id;
+        $_SESSION['correo'] = $correo;
+        $_SESSION['nombre'] = $nombres;
+        $_SESSION['apellido_p'] = $apellido_p;
+        $_SESSION['apellido_m'] = $apellido_m;
+        $_SESSION['cct'] = $cct;
+        $_SESSION['id_ficha'] = $id_ficha;
+        $_SESSION['tipo_usuario'] = 'capturista';
+
+        // Respuesta JSON
+        echo json_encode(['success' => true, 'message' => 'Registro exitoso e inicio de sesión completado.']);
+        exit;
     } catch (PDOException $e) {
         echo json_encode(['success' => false, 'message' => 'Error al registrar: ' . $e->getMessage()]);
     }
