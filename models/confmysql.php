@@ -1,8 +1,5 @@
 <?php
-define('servername',"localhost:3308");
-define('database',"siee");
-define('username',"root");
-define('password',"");
-
-
-?>
+define('servername', "localhost");
+define('database', "dbc3mttmeow4pj");
+define('username', "ueewddazigcq2");
+define('password', "ta4tsruzphpx");
