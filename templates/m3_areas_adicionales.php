@@ -117,23 +117,7 @@
 
 
 
-function muestra(id){
-var ck1=document.getElementsByName(id+"8")[0].checked;
-if(ck1){
-  var val="1";
-}else{
-   var val="0";
-}
 
-if(val==1){
-$("select#"+id+"9").attr('disabled',false);
-$("select#"+id+"10").attr('disabled',false);
-}else{
-$("select#"+id+"9").attr('disabled', true);
-$("select#"+id+"10").attr('disabled', true);
-}
-
-}
 
 
 
@@ -162,7 +146,7 @@ var data={
               
               var html="<table class=\"table table-bordered table-sm align-middle text-center\">"; 
                   html+="<thead class=\"table-light\"><tr>";
-                  html+="<th>Areas Principales</th>";
+                  html+="<th>Areas Adicionales</th>";
                   html+="<th>Existencia</th>";
                   html+="<th>Tipo de construcción</th>";
                   html+="<th>Cantidad</th>";
@@ -227,7 +211,7 @@ var data={
                html+="<option value=\"10\">10</option> </select>";
                html+="</td> ";
 
-               if(res[i].eusu.localeCompare('1')){
+               if(res[i].eusu==0){
                  html+="<td>";
                 html+="Si<input type=\"radio\" id=\"a4"+res[i].idarticulo+"\" name=\"a4"+res[i].idarticulo+"\"  value=\"1\"  >";
                 html+="No<input type=\"radio\" id=\"a4"+res[i].idarticulo+"\" name=\"a4"+res[i].idarticulo+"\" value=\"0\" checked>";
@@ -255,7 +239,7 @@ var data={
                html+="<option value=\"MALA\">Mala</option>";
                html+="</select></td>";
 
-                if(res[i].cde.localeCompare('1')){
+                if(res[i].cde==0){
                  html+="<td>";
                 html+="Si<input type=\"radio\" id=\"a6"+res[i].idarticulo+"\" name=\"a6"+res[i].idarticulo+"\"  value=\"1\"  >";
                 html+="No<input type=\"radio\" id=\"a6"+res[i].idarticulo+"\" name=\"a6"+res[i].idarticulo+"\"  value=\"0\" checked>";
@@ -268,7 +252,7 @@ var data={
                }
 
 
-                if(res[i].cdi.localeCompare('1')){
+                if(res[i].cdi==0){
                 html+="<td>";
                 html+="Si<input type=\"radio\" id=\"a7"+res[i].idarticulo+"\" name=\"a7"+res[i].idarticulo+"\"  value=\"1\"  >";
                 html+="No<input type=\"radio\" id=\"a7"+res[i].idarticulo+"\" name=\"a7"+res[i].idarticulo+"\" value=\"0\" checked>";
@@ -287,15 +271,15 @@ var data={
 
                
 
-                if(res[i].oep.localeCompare('1')){
+                if(res[i].oep==0){
                 html+="<td>";
-                html+="Si<input type=\"radio\" id=\"a8"+res[i].idarticulo+"\" name=\"a8"+res[i].idarticulo+"\"  value=\"1\"  >";
-                html+="No<input type=\"radio\" id=\"a8"+res[i].idarticulo+"\" name=\"a8"+res[i].idarticulo+"\" value=\"0\" checked>";
+                html+="Si<input onchange=\"muestra('"+res[i].idarticulo+"')\" type=\"radio\" id=\"a8"+res[i].idarticulo+"\" name=\"a8"+res[i].idarticulo+"\"  value=\"1\"  >";
+                html+="No<input onchange=\"muestra('"+res[i].idarticulo+"')\" type=\"radio\" id=\"a8"+res[i].idarticulo+"\" name=\"a8"+res[i].idarticulo+"\" value=\"0\" >";
                 
                 }else{
                 html+="<td>";
-                html+="Si<input type=\"radio\" id=\"a8"+res[i].idarticulo+"\" name=\"a8"+res[i].idarticulo+"\"  value=\"1\" checked>";
-                html+="No<input type=\"radio\" id=\"a8"+res[i].idarticulo+"\" name=\"a8"+res[i].idarticulo+"\"  value=\"0\"  >";
+                html+="Si<input onchange=\"muestra('"+res[i].idarticulo+"')\" type=\"radio\" id=\"a8"+res[i].idarticulo+"\" name=\"a8"+res[i].idarticulo+"\"  value=\"1\" >";
+                html+="No<input onchange=\"muestra('"+res[i].idarticulo+"')\" type=\"radio\" id=\"a8"+res[i].idarticulo+"\" name=\"a8"+res[i].idarticulo+"\"  value=\"0\"  >";
                
                 }
                
@@ -331,7 +315,7 @@ var data={
                html+="</select>";
                html+="</div></td>";
 
-                if(res[i].rca.localeCompare('1')){
+                if(res[i].rca==0){
                 html+="<td>";
                 html+="Si<input type=\"radio\" id=\"a11"+res[i].idarticulo+"\" name=\"a11"+res[i].idarticulo+"\"  value=\"1\"  >";
                 html+="No<input type=\"radio\" id=\"a11"+res[i].idarticulo+"\" name=\"a11"+res[i].idarticulo+"\" value=\"0\"checked>";
@@ -353,7 +337,7 @@ var data={
             
             
               }   
-              script+="}";
+              script+=" swal.fire(\"Datos Actualizados\")}";
               html+=" </table>";
               $("div#aa").html(html+script);
             },

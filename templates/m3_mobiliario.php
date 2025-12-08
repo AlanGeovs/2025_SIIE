@@ -117,23 +117,7 @@
 
 
 
-function muestra(id){
-var ck1=document.getElementsByName(id+"8")[0].checked;
-if(ck1){
-  var val="1";
-}else{
-   var val="0";
-}
 
-if(val==1){
-$("select#"+id+"9").attr('disabled',false);
-$("select#"+id+"10").attr('disabled',false);
-}else{
-$("select#"+id+"9").attr('disabled', true);
-$("select#"+id+"10").attr('disabled', true);
-}
-
-}
 
 
 
@@ -162,16 +146,16 @@ var data={
               
               var html="<table class=\"table table-bordered table-sm align-middle text-center\">"; 
                   html+="<thead class=\"table-light\"><tr>";
-                  html+="<th>Areas Principales</th>";
+                  html+="<th>Mobiliario</th>";
                   html+="<th>Existencia</th>";
-                  html+="<th>Tipo de construcción</th>";
+                 // html+="<th>Tipo de construcción</th>";
                   html+="<th>Cantidad</th>";
                   html+="<th>En uso</th>";
                   html+="<th>Condición</th>";
-                  html+="<th>Con daño estructural</th>";
-                  html+="<th>Con daño de instalación</th>";
-                  html+="<th>Obra en proceso</th>";
-                  html+="<th>Requiere construcción adicional</th>";
+                //  html+="<th>Con daño estructural</th>";
+                //  html+="<th>Con daño de instalación</th>";
+                //  html+="<th>Obra en proceso</th>";
+                //  html+="<th>Requiere construcción adicional</th>";
                   html+="<th>Evidencia</th>";
                   html+="</tr></thead>";
               var  script="<script>function guardar(){";
@@ -195,7 +179,7 @@ var data={
                 html+="</td>";
                }
                
-               html+="<td><select class=\"form-select form-select-sm\" id=\"a2"+res[i].idarticulo+"\" name=\"a2"+res[i].idarticulo+"\">";
+               html+="<td style=\"display:none\"><select class=\"form-select form-select-sm\" id=\"a2"+res[i].idarticulo+"\" name=\"a2"+res[i].idarticulo+"\">";
                if(res[i].tc==0){
                html+="<option  value=\""+res[i].tc+"\" selected='true'>Selecciona tipo</option>"; 
                }else{
@@ -227,8 +211,8 @@ var data={
                html+="<option value=\"10\">10</option> </select>";
                html+="</td> ";
 
-               if(res[i].eusu.localeCompare('1')){
-                 html+="<td>";
+               if(res[i].eusu==0){
+                 html+="<td >";
                 html+="Si<input type=\"radio\" id=\"a4"+res[i].idarticulo+"\" name=\"a4"+res[i].idarticulo+"\"  value=\"1\"  >";
                 html+="No<input type=\"radio\" id=\"a4"+res[i].idarticulo+"\" name=\"a4"+res[i].idarticulo+"\" value=\"0\" checked>";
                 html+="</td>";
@@ -255,26 +239,26 @@ var data={
                html+="<option value=\"MALA\">Mala</option>";
                html+="</select></td>";
 
-                if(res[i].cde.localeCompare('1')){
-                 html+="<td>";
+                if(res[i].cde==0){
+                 html+="<td style=\"display:none\">";
                 html+="Si<input type=\"radio\" id=\"a6"+res[i].idarticulo+"\" name=\"a6"+res[i].idarticulo+"\"  value=\"1\"  >";
                 html+="No<input type=\"radio\" id=\"a6"+res[i].idarticulo+"\" name=\"a6"+res[i].idarticulo+"\"  value=\"0\" checked>";
                 html+="</td>";
                }else{
-                html+="<td>";
+                html+="<td style=\"display:none\">";
                 html+="Si<input type=\"radio\" id=\"a6"+res[i].idarticulo+"\" name=\"a6"+res[i].idarticulo+"\"  value=\"1\" checked>";
                 html+="No<input type=\"radio\" id=\"a6"+res[i].idarticulo+"\" name=\"a6"+res[i].idarticulo+"\"  value=\"0\"  >";
                 html+="</td>";
                }
 
 
-                if(res[i].cdi.localeCompare('1')){
-                html+="<td>";
+                if(res[i].cdi==0){
+                html+="<td style=\"display:none\">";
                 html+="Si<input type=\"radio\" id=\"a7"+res[i].idarticulo+"\" name=\"a7"+res[i].idarticulo+"\"  value=\"1\"  >";
                 html+="No<input type=\"radio\" id=\"a7"+res[i].idarticulo+"\" name=\"a7"+res[i].idarticulo+"\" value=\"0\" checked>";
                 html+="</td>";
                 }else{
-                html+="<td>";
+                html+="<td style=\"display:none\">";
                 html+="Si<input type=\"radio\" id=\"a7"+res[i].idarticulo+"\" name=\"a7"+res[i].idarticulo+"\"  value=\"1\" checked>";
                 html+="No<input type=\"radio\" id=\"a7"+res[i].idarticulo+"\" name=\"a7"+res[i].idarticulo+"\"  value=\"0\"  >";
                 html+="</td>";
@@ -287,19 +271,19 @@ var data={
 
                
 
-                if(res[i].oep.localeCompare('1')){
-                html+="<td>";
+                if(res[i].oep==0){
+                html+="<td style=\"display:none\">";
                 html+="Si<input type=\"radio\" id=\"a8"+res[i].idarticulo+"\" name=\"a8"+res[i].idarticulo+"\"  value=\"1\"  >";
                 html+="No<input type=\"radio\" id=\"a8"+res[i].idarticulo+"\" name=\"a8"+res[i].idarticulo+"\" value=\"0\" checked>";
                 
                 }else{
-                html+="<td>";
+                html+="<td style=\"display:none\">";
                 html+="Si<input type=\"radio\" id=\"a8"+res[i].idarticulo+"\" name=\"a8"+res[i].idarticulo+"\"  value=\"1\" checked>";
                 html+="No<input type=\"radio\" id=\"a8"+res[i].idarticulo+"\" name=\"a8"+res[i].idarticulo+"\"  value=\"0\"  >";
                
                 }
                
-               html+=" <div class=\"mt-1\">";
+               html+=" <div class=\"mt-1\" >";
                html+=" <select id=\"a9"+res[i].idarticulo+"\" name=\"a9"+res[i].idarticulo+"\" class=\"form-select form-select-sm mt-1\" disabled>";
                if(res[i].to==0){
                html+="<option  value=\"0\" selected='true'>Tipo de obra</option>"; 
@@ -331,13 +315,13 @@ var data={
                html+="</select>";
                html+="</div></td>";
 
-                if(res[i].rca.localeCompare('1')){
-                html+="<td>";
+                if(res[i].rca==0){
+                html+="<td style=\"display:none\">";
                 html+="Si<input type=\"radio\" id=\"a11"+res[i].idarticulo+"\" name=\"a11"+res[i].idarticulo+"\"  value=\"1\"  >";
                 html+="No<input type=\"radio\" id=\"a11"+res[i].idarticulo+"\" name=\"a11"+res[i].idarticulo+"\" value=\"0\"checked>";
                 html+="</td>";
                }else{
-                html+="<td>";
+                html+="<td style=\"display:none\">";
                 html+="Si<input type=\"radio\" id=\"a11"+res[i].idarticulo+"\" name=\"a11"+res[i].idarticulo+"\"  value=\"1\" checked>";
                 html+="No<input type=\"radio\" id=\"a11"+res[i].idarticulo+"\" name=\"a11"+res[i].idarticulo+"\"  value=\"0\"  >";
                 html+="</td>";
@@ -353,7 +337,7 @@ var data={
             
             
               }   
-              script+="}";
+              script+=" swal.fire(\"Datos Actualizados\")}";
               html+=" </table>";
               $("div#mobi").html(html+script);
             },
