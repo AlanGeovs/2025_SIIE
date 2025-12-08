@@ -1,201 +1,387 @@
-<form id="formAreasAdicionales" class="p-3">
-<style>
-  /* Resalta filas específicas de la tabla (sobrescribe estilos de Bootstrap en celdas) */
-  .fila-resaltada > td {
-    background-color: #f2f2f2 !important;
-  }
-</style>
+
+<script>
+    function areas_principales_area(idarticulo,idedificio){
+    var formData = new FormData(document.getElementById("archivoa12"+idarticulo));
+
+    const inputArchivo = document.getElementById('a12'+idarticulo);
+   /* if (inputArchivo.files.length === 0) {
+    alert("archivo vacio");
+    return false;
+    }    */
 
 
-    <!-- Áreas adicionales -->
-    <div class="table-responsive mb-4">
-        <table class="table table-bordered table-sm align-middle text-center">
-            <thead class="table-light">
-                <tr>
-                    <th class="tituloTablaDestacado" style="background-color: #611232; color: #fff;">Áreas adicionales</th>
-                    <th>Existencia</th>
-                    <th>Tipo de construcción</th>
-                    <th>Cantidad</th>
-                    <th>En uso</th>
-                    <th>Condición</th>
-                    <th>Con daño estructural</th>
-                    <th>Con daño de instalación</th>
-                    <th>Obra en proceso</th>
-                    <th>Requiere construcción adicional</th>
-                    <th>Evidencia</th>
-                </tr>
-            </thead>
-            <tbody id="tablaAreasAdicionales"></tbody>
-        </table>
+    formData.append("dato", "valor");
+    formData.append("idedi",idedificio);
+    
+    var ck;
+    ck=document.getElementsByName('a1'+idarticulo)[0].checked;
+    var exi;
+    if(ck){
+     exi="1";
+    }else{
+     exi="0";
+    }
+    formData.append("a1",exi);
+    var tc=document.getElementsByName('a2'+idarticulo)[0].value;
+    formData.append("a2",tc);
+    var canti=document.getElementsByName('a3'+idarticulo)[0].value;
+    formData.append("a3",canti);
+    ck=document.getElementsByName('a4'+idarticulo)[0].checked;
+    var euso;
+    if(ck){
+     euso="1";
+    }else{
+     euso="0";
+    }
+    formData.append("a4",euso);
+    var condi=document.getElementsByName('a5'+idarticulo)[0].value;
+    formData.append("a5",condi);
+    ck=document.getElementsByName('a6'+idarticulo)[0].checked;
+    var danoe;
+    if(ck){
+     danoe="1";
+    }else{
+     danoe="0";
+    }
+    formData.append("a6",danoe);
+   
+    ck=document.getElementsByName('a7'+idarticulo)[0].checked;
+    var danoi;
+    if(ck){
+     danoi="1";
+    }else{
+     danoi="0";
+    }
+    formData.append("a7",danoi);
+    
+    ck=document.getElementsByName('a8'+idarticulo)[0].checked;
+    var obrap;
+    if(ck){
+     obrap="1";
+    }else{
+     obrap="0";
+    }
+    formData.append("a8",obrap);
+
+
+    if(obrap==1){
+    var tipoo=document.getElementsByName('a9'+idarticulo)[0].value;
+    var recu=document.getElementsByName('a10'+idarticulo)[0].value;
+    formData.append("a9",tipoo);
+    formData.append("a10",recu);
+    }else{
+    formData.append("a9","0");
+    formData.append("a10","0");
+    }
+
+    
+    ck=document.getElementsByName('a11'+idarticulo)[0].checked;
+    var rca;
+    if(ck){
+     rca="1";
+    }else{
+     rca="0";
+    }
+    formData.append("a11",rca);
+    formData.append("control",5);
+    formData.append("archivo",'a12'+idarticulo);
+   // formData.append("area",idarea);
+                $.ajax({
+                url: "../controllers/control_vista_modulo3.php",
+                type: "post",
+                dataType: "html",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+          
+                },
+                success: function(response) {
+             
+                
+                },
+      
+      
+    });
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+function muestra(id){
+var ck1=document.getElementsByName(id+"8")[0].checked;
+if(ck1){
+  var val="1";
+}else{
+   var val="0";
+}
+
+if(val==1){
+$("select#"+id+"9").attr('disabled',false);
+$("select#"+id+"10").attr('disabled',false);
+}else{
+$("select#"+id+"9").attr('disabled', true);
+$("select#"+id+"10").attr('disabled', true);
+}
+
+}
+
+
+
+
+function muestraArea2(){  
+    var idEdificio=document.getElementsByName("idEdificio2")[0].value;
+  
+var data={
+    "control":4,
+    "idusuario":idEdificio,
+    "idarea":2
+   
+    }
+  $.ajax({
+            type: 'POST',
+            url: "../controllers/control_vista_modulo3.php",
+            data: data,
+            beforeSend: function() {
+            
+
+            },
+             success: function(response) {  
+            var res = JSON.parse(response); 
+
+
+              
+              var html="<table class=\"table table-bordered table-sm align-middle text-center\">"; 
+                  html+="<thead class=\"table-light\"><tr>";
+                  html+="<th>Areas Principales</th>";
+                  html+="<th>Existencia</th>";
+                  html+="<th>Tipo de construcción</th>";
+                  html+="<th>Cantidad</th>";
+                  html+="<th>En uso</th>";
+                  html+="<th>Condición</th>";
+                  html+="<th>Con daño estructural</th>";
+                  html+="<th>Con daño de instalación</th>";
+                  html+="<th>Obra en proceso</th>";
+                  html+="<th>Requiere construcción adicional</th>";
+                  html+="<th>Evidencia</th>";
+                  html+="</tr></thead>";
+              var  script="<script>function guardar(){";
+              
+               for (i = 0; i < res.length; i++) {
+               script+="areas_principales_area(\""+res[i].idarticulo+"\",\""+res[i].id+"\");";
+
+               html+="<tr>";
+               html+="<td>"+res[i].articulo+"</td>";
+
+
+               if(res[i].exi==0){
+                html+="<td>";
+                html+="Si<input type=\"radio\" id=\"a1"+res[i].idarticulo+"\" name=\"a1"+res[i].idarticulo+"\"  value=\"1\"  >";
+                html+="No<input type=\"radio\" id=\"a1"+res[i].idarticulo+"\" name=\"a1"+res[i].idarticulo+"\" value=\"0\" checked>";
+                html+="</td>";
+               }else{
+                html+="<td>";
+                html+="Si<input type=\"radio\" id=\"a1"+res[i].idarticulo+"\" name=\"a1"+res[i].idarticulo+"\"  value=\"1\" checked>";
+                html+="No<input type=\"radio\" id=\"a1"+res[i].idarticulo+"\" name=\"a1"+res[i].idarticulo+"\"  value=\"0\"  >";
+                html+="</td>";
+               }
+               
+               html+="<td><select class=\"form-select form-select-sm\" id=\"a2"+res[i].idarticulo+"\" name=\"a2"+res[i].idarticulo+"\">";
+               if(res[i].tc==0){
+               html+="<option  value=\""+res[i].tc+"\" selected='true'>Selecciona tipo</option>"; 
+               }else{
+               html+="<option value=\""+res[i].tc+"\">\""+res[i].tc+"\"</option>";
+               }
+               
+               html+="<option value=\"LIGERA\">Ligera</option>";
+               html+="<option value=\"TRADICIONAL\">Tradicional</option>";
+               html+="<option value=\"MIXTA\">Mixta</option>";
+               html+="</select>";
+               html+="</td>";
+
+
+               html+="<td><select class=\"form-select form-select-sm\" id=\"a3"+res[i].idarticulo+"\" name=\"a3"+res[i].idarticulo+"\">";
+               if(res[i].canti==0){
+               html+="<option  value=\""+res[i].canti+"\" selected='true'>Selecciona cantidad</option>"; 
+               }else{
+               html+="<option value=\""+res[i].canti+"\">\""+res[i].canti+"\"</option>";
+               }
+               html+="<option value=\"1\">1</option>";
+               html+="<option value=\"2\">2</option>";
+               html+="<option value=\"3\">3</option>";
+               html+="<option value=\"4\">4</option>";
+               html+="<option value=\"5\">5</option>";
+               html+="<option value=\"6\">6</option>";
+               html+="<option value=\"7\">7</option>";
+               html+="<option value=\"8\">8</option>";
+               html+="<option value=\"9\">9</option>";
+               html+="<option value=\"10\">10</option> </select>";
+               html+="</td> ";
+
+               if(res[i].eusu.localeCompare('1')){
+                 html+="<td>";
+                html+="Si<input type=\"radio\" id=\"a4"+res[i].idarticulo+"\" name=\"a4"+res[i].idarticulo+"\"  value=\"1\"  >";
+                html+="No<input type=\"radio\" id=\"a4"+res[i].idarticulo+"\" name=\"a4"+res[i].idarticulo+"\" value=\"0\" checked>";
+                html+="</td>";
+               }else{
+                html+="<td>";
+                html+="Si<input type=\"radio\" id=\"a4"+res[i].idarticulo+"\" name=\"a4"+res[i].idarticulo+"\"  value=\"1\" checked>";
+                html+="No<input type=\"radio\" id=\"a4"+res[i].idarticulo+"\" name=\"a4"+res[i].idarticulo+"\"  value=\"0\"  >";
+                html+="</td>";
+               }
+
+               
+
+
+               html+="<td><select class=\"form-select form-select-sm\" id=\"a5"+res[i].idarticulo+"\" name=\"a5"+res[i].idarticulo+"\">";
+               if(res[i].condi==0){
+               html+="<option  value=\""+res[i].condi+"\" selected='true'>Selecciona condición</option>"; 
+               }else{
+               html+="<option value=\""+res[i].condi+"\">\""+res[i].condi+"\"</option>";
+               }
+         
+
+               html+="<option value=\"BUENA\">Buena</option>";
+               html+="<option value=\"REGULAR\">Regular</option>";
+               html+="<option value=\"MALA\">Mala</option>";
+               html+="</select></td>";
+
+                if(res[i].cde.localeCompare('1')){
+                 html+="<td>";
+                html+="Si<input type=\"radio\" id=\"a6"+res[i].idarticulo+"\" name=\"a6"+res[i].idarticulo+"\"  value=\"1\"  >";
+                html+="No<input type=\"radio\" id=\"a6"+res[i].idarticulo+"\" name=\"a6"+res[i].idarticulo+"\"  value=\"0\" checked>";
+                html+="</td>";
+               }else{
+                html+="<td>";
+                html+="Si<input type=\"radio\" id=\"a6"+res[i].idarticulo+"\" name=\"a6"+res[i].idarticulo+"\"  value=\"1\" checked>";
+                html+="No<input type=\"radio\" id=\"a6"+res[i].idarticulo+"\" name=\"a6"+res[i].idarticulo+"\"  value=\"0\"  >";
+                html+="</td>";
+               }
+
+
+                if(res[i].cdi.localeCompare('1')){
+                html+="<td>";
+                html+="Si<input type=\"radio\" id=\"a7"+res[i].idarticulo+"\" name=\"a7"+res[i].idarticulo+"\"  value=\"1\"  >";
+                html+="No<input type=\"radio\" id=\"a7"+res[i].idarticulo+"\" name=\"a7"+res[i].idarticulo+"\" value=\"0\" checked>";
+                html+="</td>";
+                }else{
+                html+="<td>";
+                html+="Si<input type=\"radio\" id=\"a7"+res[i].idarticulo+"\" name=\"a7"+res[i].idarticulo+"\"  value=\"1\" checked>";
+                html+="No<input type=\"radio\" id=\"a7"+res[i].idarticulo+"\" name=\"a7"+res[i].idarticulo+"\"  value=\"0\"  >";
+                html+="</td>";
+                }
+               
+
+
+
+
+
+               
+
+                if(res[i].oep.localeCompare('1')){
+                html+="<td>";
+                html+="Si<input type=\"radio\" id=\"a8"+res[i].idarticulo+"\" name=\"a8"+res[i].idarticulo+"\"  value=\"1\"  >";
+                html+="No<input type=\"radio\" id=\"a8"+res[i].idarticulo+"\" name=\"a8"+res[i].idarticulo+"\" value=\"0\" checked>";
+                
+                }else{
+                html+="<td>";
+                html+="Si<input type=\"radio\" id=\"a8"+res[i].idarticulo+"\" name=\"a8"+res[i].idarticulo+"\"  value=\"1\" checked>";
+                html+="No<input type=\"radio\" id=\"a8"+res[i].idarticulo+"\" name=\"a8"+res[i].idarticulo+"\"  value=\"0\"  >";
+               
+                }
+               
+               html+=" <div class=\"mt-1\">";
+               html+=" <select id=\"a9"+res[i].idarticulo+"\" name=\"a9"+res[i].idarticulo+"\" class=\"form-select form-select-sm mt-1\" disabled>";
+               if(res[i].to==0){
+               html+="<option  value=\"0\" selected='true'>Tipo de obra</option>"; 
+               }else{
+               html+="<option value=\""+res[i].to+"\">\""+res[i].to+"\"</option>";
+               }
+               
+               html+="<option value=\"Albañileria\">Albañilería</option>";
+               html+="<option value=\"Pintura y acabados\">Pintura y acabados</option>";
+               html+="<option value=\"Reforzamiento de estructuras\">Reforzamiento de estructuras</option>";
+               html+=" <option value=\"Herreria\">Herrería</option>";
+               html+="<option value=\"Plomeria\">Plomería</option>";
+               html+="<option value=\"Impermeabilizacion\">Impermeabilización</option>";
+               html+=" <option value=\"Red electrica\">Red eléctrica</option>";
+               html+="<option value=\"Red hidraulica\">Red hidráulica</option>";
+               html+="<option value=\"Carpinteria\">Carpintería</option>";
+               html+="<option value=\"Urbanismo\">Urbanismo</option>";
+               html+="</select>";
+               html+="<select id=\"a10"+res[i].idarticulo+"\" name=\"a10"+res[i].idarticulo+"\" class=\"form-select form-select-sm mt-1\" disabled>";
+               if(res[i].recu==0){
+               html+="<option  value=\"0\" selected='true'>Recurso</option>"; 
+               }else{
+               html+="<option value=\""+res[i].recu+"\">\""+res[i].recu+"\"</option>";
+               }
+              
+               html+="<option value=\"Federal\">Federal</option>";
+               html+="<option value=\"Estatal\">Estatal</option>";
+               html+="<option value=\"Municipal\">Municipal</option>";
+               html+="</select>";
+               html+="</div></td>";
+
+                if(res[i].rca.localeCompare('1')){
+                html+="<td>";
+                html+="Si<input type=\"radio\" id=\"a11"+res[i].idarticulo+"\" name=\"a11"+res[i].idarticulo+"\"  value=\"1\"  >";
+                html+="No<input type=\"radio\" id=\"a11"+res[i].idarticulo+"\" name=\"a11"+res[i].idarticulo+"\" value=\"0\"checked>";
+                html+="</td>";
+               }else{
+                html+="<td>";
+                html+="Si<input type=\"radio\" id=\"a11"+res[i].idarticulo+"\" name=\"a11"+res[i].idarticulo+"\"  value=\"1\" checked>";
+                html+="No<input type=\"radio\" id=\"a11"+res[i].idarticulo+"\" name=\"a11"+res[i].idarticulo+"\"  value=\"0\"  >";
+                html+="</td>";
+                }
+               
+               html+="<td>";
+               html+="<form enctype=\"multipart/form-data\" id=\"archivoa12"+res[i].idarticulo+"\" method=\"post\"> ";
+               html+="<input type=\"file\" id=\"a12"+res[i].idarticulo+"\" name=\"a12"+res[i].idarticulo+"\" />";
+               html+="</form>";
+               html+=" </td>";
+
+               html+="</tr>";
+            
+            
+              }   
+              script+="}";
+              html+=" </table>";
+              $("div#aa").html(html+script);
+            },
+      });
+}
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+    <!-- Áreas principales -->
+    <div class="table-responsive mb-4" id="aa">
+     
     </div>
-
+<!-------------------------------------------------------------------------------------->
     <div class="text-end">
-        <button type="submit" class="btn text-white" style="background-color:#691c32;">
+        <button onclick="guardar()" class="btn text-white" style="background-color:#691c32;">
             <i class="bi bi-save"></i> Guardar información
         </button>
     </div>
 
-</form>
 
-<script>
-    // === Configuración de áreas adicionales ===
-    const areasAdicionales = [
-        "Administrativa", "Biblioteca", "Bodega", "Casa del conserje", "Casa del maestro",
-        "Centro de cómputo", "Cocina", "Comedor", "Dormitorio", "Intendencia", "Laboratorio",
-        "Pórtico", "Sala de usos múltiples", "Subdirección", "Taller", "Vestidor"
-    ];
 
-    // Utilidad para generar un "slug" sin acentos/espacios para usar en name/id
-    function slugify(text) {
-        return text
-            .toString()
-            .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // quitar acentos
-            .replace(/\s+/g, '_') // espacios por guión bajo
-            .replace(/[^\w\-]+/g, '') // quitar no alfanumérico
-            .toLowerCase();
-    }
-
-    // --- Helpers HTML ---
-    function selectTipoConstruccion(nameAttr) {
-        return `
-        <select class="form-select form-select-sm" name="${nameAttr}">
-            <option value="">Selecciona tipo</option>
-            <option value="LIGERA">Ligera</option>
-            <option value="TRADICIONAL">Tradicional</option>
-            <option value="MIXTA">Mixta</option>
-        </select>`;
-    }
-
-    function selectCantidad(nameAttr, max = 10) {
-        return `
-        <select class="form-select form-select-sm" name="${nameAttr}">
-            <option value="">Selecciona cantidad</option>
-            ${[...Array(max)].map((_, i) => `<option value="${i+1}">${i+1}</option>`).join('')}
-        </select>`;
-    }
-
-    function radiosSiNo(nameAttr) {
-        const idBase = nameAttr.replace(/\W+/g, '_');
-        return `
-        <div class="d-inline-flex gap-2">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="${idBase}_si" name="${nameAttr}" value="SI">
-                <label class="form-check-label" for="${idBase}_si">Sí</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="${idBase}_no" name="${nameAttr}" value="NO">
-                <label class="form-check-label" for="${idBase}_no">No</label>
-            </div>
-        </div>`;
-    }
-
-    function selectCondicion(nameAttr) {
-        return `
-        <select class="form-select form-select-sm" name="${nameAttr}">
-            <option value="">Selecciona condición</option>
-            <option value="BUENA">Buena</option>
-            <option value="REGULAR">Regular</option>
-            <option value="MALA">Mala</option>
-        </select>`;
-    }
-
-    function obraEnProcesoBlock(slug) {
-        // name/id consistentes
-        const nameObra = `aa_obra_${slug}`;
-        const idBase = `aa_obra_${slug}`;
-        const tipoObraId = `tipo-obra-${slug}`;
-        const recursoObraId = `recurso-obra-${slug}`;
-        const nameTipoObra = `aa_tipo_obra_${slug}`;
-        const nameRecursoObra = `aa_recurso_obra_${slug}`;
-
-        return `
-        <div>
-            <div class="d-inline-flex gap-2">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input obra-toggle" type="radio" id="${idBase}_si" name="${nameObra}" value="SI" data-slug="${slug}">
-                    <label class="form-check-label" for="${idBase}_si">Sí</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input obra-toggle" type="radio" id="${idBase}_no" name="${nameObra}" value="NO" data-slug="${slug}">
-                    <label class="form-check-label" for="${idBase}_no">No</label>
-                </div>
-            </div>
-            <div class="mt-1">
-                <select id="${tipoObraId}" name="${nameTipoObra}" class="form-select form-select-sm mt-1" disabled>
-                    <option value="">Tipo de obra</option>
-                    <option value="Albañileria">Albañilería</option>
-                    <option value="Pintura y acabados">Pintura y acabados</option>
-                    <option value="Reforzamiento de estructuras">Reforzamiento de estructuras</option>
-                    <option value="Herreria">Herrería</option>
-                    <option value="Plomeria">Plomería</option>
-                    <option value="Impermeabilizacion">Impermeabilización</option>
-                    <option value="Red electrica">Red eléctrica</option>
-                    <option value="Red hidraulica">Red hidráulica</option>
-                    <option value="Carpinteria">Carpintería</option>
-                    <option value="Urbanismo">Urbanismo</option>
-                </select>
-                <select id="${recursoObraId}" name="${nameRecursoObra}" class="form-select form-select-sm mt-1" disabled>
-                    <option value="">Recurso</option>
-                    <option value="Federal">Federal</option>
-                    <option value="Estatal">Estatal</option>
-                    <option value="Municipal">Municipal</option>
-                </select>
-            </div>
-        </div>`;
-    }
-
-    function evidenciaButton(slug) {
-        return `
-        <label class="btn btn-evidencia btn-sm w-100">
-            Agregar evidencia
-            <input type="file" class="evidencia-input" data-modulo="3-areas-adicionales-${slug}" style="display:none;">
-        </label>`;
-    }
-
-    // Construye una fila para un área adicional
-    function crearFilaAreaAdicional(area) {
-        const slug = slugify(area);
-        const rowClass = (area === "Casa del conserje" || area === "Casa del maestro") ? ' class="fila-resaltada"' : '';
-        return `
-        <tr${rowClass}>
-            <td class="text-start">${area}</td>
-            <td>${radiosSiNo('aa_existe_' + slug)}</td>
-            <td>${selectTipoConstruccion('aa_tipo_construccion_' + slug)}</td>
-            <td>${selectCantidad('aa_cantidad_' + slug)}</td>
-            <td>${radiosSiNo('aa_uso_' + slug)}</td>
-            <td>${selectCondicion('aa_condicion_' + slug)}</td>
-            <td>${radiosSiNo('aa_danio_estructural_' + slug)}</td>
-            <td>${radiosSiNo('aa_danio_instalacion_' + slug)}</td>
-            <td>${obraEnProcesoBlock(slug)}</td>
-            <td>${radiosSiNo('aa_construccion_adicional_' + slug)}</td>  
-            <td>${evidenciaButton(slug)}</td>
-        </tr>`;
-    }
-
-    // Render de tabla (solo áreas adicionales)
-    document.addEventListener("DOMContentLoaded", () => {
-        const tbody = document.getElementById("tablaAreasAdicionales");
-        tbody.innerHTML = "";
-        areasAdicionales.forEach(area => {
-            tbody.insertAdjacentHTML("beforeend", crearFilaAreaAdicional(area));
-        });
-
-        // Habilitar/Deshabilitar selects de obra en proceso
-        document.addEventListener('change', (e) => {
-            if (e.target.classList.contains('obra-toggle')) {
-                const slug = e.target.dataset.slug;
-                const enable = (e.target.value === 'SI');
-                const tipo = document.getElementById('tipo-obra-' + slug);
-                const recurso = document.getElementById('recurso-obra-' + slug);
-                if (tipo && recurso) {
-                    tipo.disabled = !enable;
-                    recurso.disabled = !enable;
-                    if (!enable) {
-                        tipo.value = "";
-                        recurso.value = "";
-                    }
-                }
-            }
-        });
-    });
-</script>
