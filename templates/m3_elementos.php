@@ -206,6 +206,8 @@
         });
     });
 
+
+
     function toggleObraEnProceso(norm, enabled) {
         const tipo = document.getElementById('tipo-obra-' + norm);
         const recurso = document.getElementById('recurso-obra-' + norm);

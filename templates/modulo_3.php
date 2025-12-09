@@ -217,7 +217,8 @@
     <div class="tab-pane fade" id="panel-externa" role="tabpanel" aria-labelledby="tab-externa">
         <!--  Infraestructura Externa -->
         <div class="mt-3">
-            <span class="fw-bold">3.2.1 ¿Cuántas áreas comunes tiene el inmueble?</span>
+            <h4>Infraestructura externa </h4>
+            <!-- <span class="fw-bold">3.2.1 ¿Cuántas áreas comunes tiene el inmueble?</span>
             <br><br>
             <select id="cantidad_areas_comunes" class="form-control mb-3" onchange="generateAreasTable()">
                 <option value="0">Selecciona una opción</option>
@@ -231,7 +232,7 @@
                 <option value="8">8</option>
                 <option value="9">9</option>
                 <option value="10">10</option>
-            </select>
+            </select> -->
 
             <div class="mt-3 mb-3 d-flex gap-3">
                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal_areas_comunes">

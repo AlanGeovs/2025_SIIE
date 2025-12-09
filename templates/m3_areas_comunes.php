@@ -1,5 +1,6 @@
 <div class="bd-callout bd-callout-primary" style="border-left: 4px solid #2563eb; background-color: #f0f7ff; padding: 1rem; border-radius: 0.25rem; margin-bottom: 1rem;">
     <p class="mb-0" style="color: #2563eb;">
+
         <i class="bi bi-info-circle-fill"></i>
         <strong>Asigna una letra a las áreas comunes</strong>, empezando por la de mayor tamaño o uso -e importancia-, y concluyendo con la de menor.
     </p>
