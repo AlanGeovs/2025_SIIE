@@ -132,16 +132,28 @@ if ($idFichaSesion > 0) {
 
     <div class="card p-3">
         <?php
-        $flagKeyActual = 'm' . $modulo;
-        $capturadoActual = isset($estatusModulos[$flagKeyActual]) ? intval($estatusModulos[$flagKeyActual]) === 1 : false;
+        $totalCapturados = array_sum($estatusModulos);
 
-        if ($capturadoActual) {
-            echo '<div class="alert alert-success py-2 mb-3"><i class="fas fa-check-circle me-1"></i>Este módulo ya fue capturado.</div>';
+        if ($totalCapturados === 6) {
+            echo '<div class="alert alert-success text-center py-4">
+                    <i class="fas fa-check-circle fa-2x mb-2"></i><br>
+                    <strong>¡Has capturado todos los módulos!</strong><br>
+                    El registro del Centro de Trabajo se encuentra completo.
+                  </div>';
         } else {
-            echo '<div class="alert alert-warning py-2 mb-3"><i class="fas fa-clock me-1"></i>Este módulo aún no está capturado.</div>';
+            $flagKeyActual = 'm' . $modulo;
+            $capturadoActual = isset($estatusModulos[$flagKeyActual]) ? intval($estatusModulos[$flagKeyActual]) === 1 : false;
+
+            if ($capturadoActual) {
+                echo '<div class="alert alert-success py-2 mb-3"><i class="fas fa-check-circle me-1"></i>Este módulo ya fue capturado.</div>';
+            } else {
+                echo '<div class="alert alert-warning py-2 mb-3"><i class="fas fa-clock me-1"></i>Este módulo aún no está capturado.</div>';
+            }
+        ?>
+            <?php require_once __DIR__ . '/../templates/modulo_' . $modulo . '.php'; ?>
+        <?php
         }
         ?>
-        <?php require_once __DIR__ . '/../templates/modulo_' . $modulo . '.php'; ?>
     </div>
 
 

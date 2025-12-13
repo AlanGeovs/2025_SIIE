@@ -46,11 +46,11 @@
                 html += "<tr>";
                 html += "<th>Edificio</th>";
                 html += "<th>Nivel</th>";
-                html += "<th>Areas Principales</th>";
-                html += "<th>Areas Adicionales</th>";
+                html += "<th>Áreas Principales</th>";
+                html += "<th>Áreas Adicionales</th>";
                 html += "<th>Mobiliario</th>";
                 html += "<th>Equipo</th>";
-                html += "<th>Acciones</th>";
+                html += "<th> </th>";
                 html += "</tr>";
 
                 var res = JSON.parse(response);
@@ -113,7 +113,7 @@
             },
         });
     }
-    muestraEdificio('1');
+    muestraEdificio('<?php echo $_SESSION['usuario_id'] ?? 0; ?>');
 </script>
 <div class="card-header">
     <h4 class="card-title mb-0" style="color: #611232; font-size: 24px; font-weight: bold;">
@@ -139,6 +139,15 @@
             <table style="width:100%">
                 <tr>
                     <td style="width:20%">Numero de Edificio:</td>
+
+                    <div class="bd-callout bd-callout-primary" style="border-left: 4px solid #691c32; background-color: #f0f7ff; padding: 1rem; border-radius: 0.25rem; margin-bottom: 1rem;">
+                        <p class="mb-0" style="color: #691c32;">
+
+                            <i class="bi bi-info-circle-fill"></i>
+                            Asigna un <strong>número a cada edificio</strong>, comenzando por la de mayor tamaño o uso -e importancia-, y concluyendo con la de menor.
+                        </p>
+                    </div>
+
                     <td style="width:20%">
                         <select id="nem3" name="nem3" class="form-select form-select-sm mt-1">
                             <option value="1">1</option>
@@ -216,7 +225,7 @@
     </div>
     <div class="tab-pane fade" id="panel-externa" role="tabpanel" aria-labelledby="tab-externa">
         <!--  Infraestructura Externa -->
-        <div class="mt-3">
+        <div class="mt-3"> 
             <h4>Infraestructura externa </h4>
             <!-- <span class="fw-bold">3.2.1 ¿Cuántas áreas comunes tiene el inmueble?</span>
             <br><br>
